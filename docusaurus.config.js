@@ -16,6 +16,11 @@ module.exports = {
   organizationName: 'aerospike', // Usually your GitHub org/user name.
   projectName: 'kubernetes-operator', // Usually your repo name.
   themeConfig: {
+    algolia: {
+        apiKey: '2ae4ef750e4c4ccde17b619476db242e',
+        indexName: 'kubernetes-operator',
+        contextualSearch: true,
+    },
     colorMode: {
       defaultMode: 'light',
       disableSwitch: true,

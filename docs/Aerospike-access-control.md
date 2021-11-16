@@ -3,8 +3,7 @@ title: Aerospike Access Control
 description: Aerospike Access Control
 ---
 
-
-Aerospike Access Control includes user, role, and privilege creation and maintenance. For more details see [here](https://docs.aerospike.com/docs/configure/security/access-control/).
+Aerospike Access Control includes user, role, and privilege creation and maintenance.
 
 To manage your access controls from the operator, configure the `aerospikeAccessControl` section in the Aerospike cluster's Custom Resource (CR) file.
 
@@ -14,9 +13,9 @@ Here are a few examples for common access control tasks:
 For these examples, assume that cluster is deployed using a file named `aerospike-cluster.yaml`.
 :::
 
-## Creating a role
+## Create a Role
 
-Add a role in `roles` list under `aerospikeAccessControl`.
+Add a role in the `roles` list under `aerospikeAccessControl`.
 
 `sys-admin` and `user-admin` are standard predefined roles. Here we are adding a new custom role called "profiler" which is given `read` privileges.
 
@@ -31,9 +30,9 @@ spec:
   .
   .
   aerospikeAccessControl:
-    roles: 
+    roles:
       - name: profiler
-        privileges: 
+        privileges:
           - read
     users:
       - name: admin
@@ -43,15 +42,15 @@ spec:
           - user-admin
 ```
 
-To apply the change, run this command:
+Save and exit the CR file, then use kubectl to apply the change.
 
 ```sh
 kubectl apply -f aerospike-cluster.yaml
 ```
 
-## Adding privileges to a role
+## Add Privileges to a Role
 
-Add the `read` and `read-write` privileges to the `profiler` role in `roles` list under `aerospikeAccessControl`.
+Add the `read` and `read-write` privileges to the `profiler` role in the `roles` list under `aerospikeAccessControl`.
 
 ```yaml
 
@@ -65,9 +64,9 @@ spec:
   .
   .
   aerospikeAccessControl:
-    roles: 
+    roles:
       - name: profiler
-        privileges: 
+        privileges:
           - read
           - read-write
     users:
@@ -78,15 +77,15 @@ spec:
           - user-admin
 ```
 
-To apply the change, run this command
+Save and exit the CR file, then use kubectl to apply the change.
 
 ```sh
 kubectl apply -f aerospike-cluster.yaml
 ```
 
-## Removing privileges from a role
+## Remove Privileges from a Role
 
-Remove privileges from the desired role in `roles` list under `aerospikeAccessControl`.
+Remove privileges from the desired role in the `roles` list under `aerospikeAccessControl`.
 
 Remove `read-write` `privilege`.
 
@@ -101,9 +100,9 @@ spec:
   .
   .
   aerospikeAccessControl:
-    roles: 
+    roles:
       - name: profiler
-        privileges: 
+        privileges:
           - read
     users:
       - name: admin
@@ -113,15 +112,15 @@ spec:
           - user-admin
 ```
 
-Apply the change by running `apply` with the updated config.
+Save and exit the CR file, then use kubectl to apply the change.
 
 ```sh
 kubectl apply -f aerospike-cluster.yaml
 ```
 
-## Creating a user with roles
+## Create a User
 
-Create the secret for the user and add the user in `users` list under `aerospikeAccessControl`.
+Create the secret for the user and add the user in the `users` list under `aerospikeAccessControl`.
 
 Create a secret `profile-user-secret` containing the password for the user `profiler` by passing the password from the command line:
 
@@ -129,7 +128,7 @@ Create a secret `profile-user-secret` containing the password for the user `prof
 kubectl  -n aerospike create secret generic profile-user-secret --from-literal=password='userpass'
 ```
 
-Add `profileUser` user having `profiler` role.
+Add `profileUser` user with the `profiler` role.
 
 ```yaml
 apiVersion: asdb.aerospike.com/v1beta1
@@ -142,9 +141,9 @@ spec:
   .
   .
   aerospikeAccessControl:
-    roles: 
+    roles:
       - name: profiler
-        privileges: 
+        privileges:
           - read
     users:
       - name: profileUser
@@ -159,17 +158,17 @@ spec:
           - user-admin
 ```
 
-Apply the change:
+Save and exit the CR file, then use kubectl to apply the change.
 
 ```sh
 kubectl apply -f aerospike-cluster.yaml
 ```
 
-## Add new roles to a user
+## Add a New Role to a User
 
 Add roles in the desired user's `roles` list.
 
-Add `user-admin`, `sys-admin` in `profileUser` roles list.
+Add `user-admin` and `sys-admin` to the `profileUser` roles list.
 
 ```yaml
 apiVersion: asdb.aerospike.com/v1beta1
@@ -182,9 +181,9 @@ spec:
   .
   .
   aerospikeAccessControl:
-    roles: 
+    roles:
       - name: profiler
-        privileges: 
+        privileges:
           - read
     users:
       - name: profileUser
@@ -201,13 +200,13 @@ spec:
           - user-admin
 ```
 
-Apply the change:
+Save and exit the CR file, then use kubectl to apply the change.
 
 ```sh
 kubectl apply -f aerospike-cluster.yaml
 ```
 
-## Removing roles from a user
+## Remove a Role from a User
 
 Remove roles from the desired user's `roles` list.
 
@@ -224,9 +223,9 @@ spec:
   .
   .
   aerospikeAccessControl:
-    roles: 
+    roles:
       - name: profiler
-        privileges: 
+        privileges:
           - read
     users:
       - name: profileUser
@@ -242,13 +241,13 @@ spec:
           - user-admin
 ```
 
-Apply the change:
+Save and exit the CR file, then use kubectl to apply the change.
 
 ```sh
 kubectl apply -f aerospike-cluster.yaml
 ```
 
-## Changing a user's password
+## Change a User's Password
 
 Create a new secret `new-profile-user-secret` containing the password for Aerospike cluster user `profileUser` by passing the password from the command line:
 
@@ -269,9 +268,9 @@ spec:
   .
   .
   aerospikeAccessControl:
-    roles: 
+    roles:
       - name: profiler
-        privileges: 
+        privileges:
           - read
     users:
       - name: profileUser
@@ -287,17 +286,17 @@ spec:
           - user-admin
 ```
 
-Apply the change:
+Save and exit the CR file, then use kubectl to apply the change.
 
 ```sh
 kubectl apply -f aerospike-cluster.yaml
 ```
 
-## Dropping a role
+## Remove a Role
 
 Remove the desired role from `roles` list under `aerospikeAccessControl`. Also remove this role from the `roles` list of all the users.
 
-Remove `profiler` role.
+Remove the `profiler` role.
 
 ```yaml
 apiVersion: asdb.aerospike.com/v1beta1
@@ -323,13 +322,13 @@ spec:
           - user-admin
 ```
 
-Apply the change:
+Save and exit the CR file, then use kubectl to apply the change.
 
 ```sh
 kubectl apply -f aerospike-cluster.yaml
 ```
 
-## Dropping a user
+## Remove a user
 
 Remove the desired user from the `users` list under `aerospikeAccessControl`.
 
@@ -354,7 +353,7 @@ spec:
           - user-admin
 ```
 
-Apply the change:
+Save and exit the CR file, then use kubectl to apply the change.
 
 ```sh
 kubectl apply -f aerospike-cluster.yaml

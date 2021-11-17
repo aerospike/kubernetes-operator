@@ -3,14 +3,18 @@ title: Cluster Configuration Settings
 description: Cluster Configuration Settings
 ---
 
-## Custom Resource Definition and Custom Resource
+Aerospike cluster configuration settings are found in the Aerospike cluster Custom Resource (CR). You can edit this file to make changes to your Aerospike cluster.
 
-The Operator [CRD](https://github.com/aerospike/aerospike-kubernetes-operator/tree/2.0.0-rc1/deploy/crds/aerospike.com_aerospikeclusters_crd.yaml) specifies the CR that the operator uses. The Aerospike cluster Custom Resource (CR) based on this CRD drives the deployment and management of Aerospike clusters. To create and deploy an Aerospike cluster, create a CR yaml file.
+The Operator Custom Resource Definition (CRD) specifies the CR the Operator uses to manage the cluster.
 
-This custom resource can be edited later on to make any changes to the Aerospike cluster.
 
 ## Example CR
-A sample AerospikeCluster resource yaml file that sets up a persistent namespace and an in-memory namespace is below.
+
+This basic CR is included as an example to get you started. It creates a simple cluster with no storage, using data-in-memory (DIM).
+
+For a more realistic and more complicated real-world example, we recommend the [example rack-enabled cluster CR](https://github.com/aerospike/aerospike-kubernetes-operator/blob/master/config/samples/rack_enabled_cluster_cr.yaml).
+
+These and other example CRs are stored in [the main Aerospike Kubernetes Operator repository](https://github.com/aerospike/aerospike-kubernetes-operator/tree/master/config/samples).
 
 ```yaml
 apiVersion: asdb.aerospike.com/v1beta1
@@ -18,20 +22,12 @@ kind: AerospikeCluster
 metadata:
   name: aerocluster
   namespace: aerospike
-
 spec:
   size: 2
   image: aerospike/aerospike-server-enterprise:5.6.0.7
-  rackConfig:
-    namespaces:
-      - test
-    racks:
-      - id: 1
-        # Change to the zone for your k8s cluster.
-        zone: us-west1-a
-      - id: 2
-        # Change to the zone for your k8s cluster.
-        zone: us-west1-a
+
+  podSpec:
+    multiPodPerHost: true
 
   storage:
     filesystemVolumePolicy:
@@ -39,36 +35,19 @@ spec:
       initMethod: deleteFiles
     volumes:
       - name: workdir
-        aerospike:
-          path: /opt/aerospike
-        source:
-          persistentVolume:
-            storageClass: ssd
-            volumeMode: Filesystem
-            size: 1Gi
-      - name: ns
-        aerospike:
-          path: /opt/aerospike/data
         source:
           persistentVolume:
             storageClass: ssd
             volumeMode: Filesystem
             size: 3Gi
+        aerospike:
+          path: /opt/aerospike
       - name: aerospike-config-secret
         source:
           secret:
             secretName: aerospike-secret
         aerospike:
           path: /etc/aerospike/secret
-
-  podSpec:
-    multiPodPerHost: false
-    sidecars:
-      - name: aerospike-prometheus-exporter
-        image: "aerospike/aerospike-prometheus-exporter:1.1.6"
-        ports:
-          - containerPort: 9145
-            name: exporter
 
   aerospikeAccessControl:
     users:
@@ -79,6 +58,10 @@ spec:
           - user-admin
 
   aerospikeConfig:
+    logging:
+      - name: /var/log/aerospike/aerospike.log
+        any: info
+        clustering: debug
     service:
       feature-key-file: /etc/aerospike/secret/features.conf
     security:
@@ -93,21 +76,10 @@ spec:
     namespaces:
       - name: test
         memory-size: 3000000000
-        replication-factor: 1
-        storage-engine:
-          type: device
-          files:
-            - /opt/aerospike/data/test.dat
-          filesize: 2000000000
-          data-in-memory: true
-      - name: testMem
-        memory-size: 3000000000
-        replication-factor: 1
+        replication-factor: 2
         storage-engine:
           type: memory
 ```
-
-Other sample Aerospike Cluster CR objects can be found [here](https://github.com/aerospike/aerospike-kubernetes-operator/tree/2.0.0-rc1/deploy/samples)
 
 ## Configuration
 
@@ -123,9 +95,7 @@ metadata:
 
 ## Spec
 
-The spec section provides the configuration for the cluster.
-
-The fields are described below
+The spec section defines the cluster's configurations.
 
 | Field                                                                    | Required | Type      | Default | Description                                                                                                                                                                                                                                                                                                         |
 | ------------------------------------------------------------------------ | -------- | --------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -142,9 +112,8 @@ The fields are described below
 | seedsFinderServices  <br /><sub>`Dynamic`</sub>                             | No       | Structure |         | creates additional Kubernetes service that allow clients to discover Aerospike cluster nodes. See [Seeds Finder Services](#seeds-finder-services) for details.|
 
 ## Operator Client Cert
-The operator needs to connect as an Aerospike client to perform management `asinfo` calls. If Aerospike service is configured to use TLS for clients, you need to specify the certificates that the client needs to use to make these info calls.
 
-The fields are
+The operator needs to connect as an Aerospike client to perform management `asinfo` calls. If the Aerospike service is configured to use TLS for clients, you need to specify the certificates the client uses to make these calls.
 
 | Field                                                                    | Required | Type      | Default | Description                                                                                                                                                                                                                                                                                                         |
 | ------------------------------------------------------------------------ | -------- | --------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -155,9 +124,8 @@ The fields are
  `*` Exactly one for secretCertSource or certPathInOperator must be specified
 
 ### Secret Cert Source
-Specifies that the certificate should be read from a Kubernetes Secret.
 
-The fields are
+Specifies that the certificate should be read from a Kubernetes Secret.
 
 | Field                                                                    | Required | Type      | Default | Description                                                                                                                                                                                                                                                                                                         |
 | ------------------------------------------------------------------------ | -------- | --------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -168,9 +136,8 @@ The fields are
 | clientKeyFilename                                          | No      | String   |         | The name of the secret key /file containing the operator's secret key.|
 
 ### Cert Path In Operator Source
-Specifies that the operator's certificate are mounted onto the operator's containers.
 
-The fields are
+Specifies that the operator's certificate files are mounted onto the operator's containers.
 
 
 | Field                                                                    | Required | Type      | Default | Description                                                                                                                                                                                                                                                                                                         |
@@ -182,8 +149,7 @@ The fields are
 
 ## Pod Spec
 
-Configures the Kubernetes pod running Aerospike server.
-Sidecar containers for monitoring, or running connectors can be added to each Aerospike pod.
+Configures the Kubernetes pod running Aerospike server. Sidecar containers for monitoring or running connectors can be added to each Aerospike pod.
 
 | Field    | Required | Type                                                                            | Default | Description                                                                                                     |
 | -------- | -------- | ------------------------------------------------------------------------------- | ------- | --------------------------------------------------------------------------------------------------------------- |
@@ -201,6 +167,7 @@ Sidecar containers for monitoring, or running connectors can be added to each Ae
 See [Monitoring](Monitoring.md) for details on configuring monitoring sidecars or Aerospike containers.
 
 ### Metadata
+
 Kubernetes annotations and labels to add to the pods.
 
 | Field    | Required | Type                                                                            | Default | Description                                                                                                     |
@@ -210,7 +177,8 @@ Kubernetes annotations and labels to add to the pods.
 
 
 ### Aerospike Container
-Configures the aerospike-server container created by operator.
+
+Configures the `aerospike-server` container created by operator.
 
 | Field    | Required | Type                                                                            | Default | Description                                                                                                     |
 | -------- | -------- | ------------------------------------------------------------------------------- | ------- | --------------------------------------------------------------------------------------------------------------- |
@@ -219,13 +187,11 @@ Configures the aerospike-server container created by operator.
 
 ## Storage
 
-The storage section configures persistent volumes devices to provision and attach to the containers.
+The storage section configures persistent volume devices to provision and attach to the containers.
 
-This section is required by default for persisting the Aerospike [work directory](https://docs.aerospike.com/docs/configuration/index.md?show-removed=1#work-directory). The working directory should be stored on persistent storage to ensure pod restarts do not reset Aerospike server metadata files.
+This section is required by default for persisting the Aerospike work directory. The work directory should be stored on persistent storage to ensure pod restarts do not reset Aerospike server metadata files.
 
 This section is also required if Aerospike namespaces require persistent storage.
-
-The fields in this structure are described below.
 
 | Field                                                 | Required | Type              | Default | Description                                                                                                                               |
 | ----------------------------------------------------- | -------- | ----------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
@@ -237,8 +203,6 @@ The fields in this structure are described below.
 
 Specifies persistent volume policy to determine how new volumes are initialized.
 
-The fields are
-
 | Field                                    | Required | Type    | Default | Description                                                                                                                                                         |
 | ---------------------------------------- | -------- | ------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | initMethod    <br /><sub>`Dynamic`</sub> | No       | Enum    | none    | Controls how the volumes are initialized when the persistent volume is attached the first time to a pod. Valid values are `none`, `dd`, `blkdiscard`, `deleteFiles` |
@@ -247,13 +211,13 @@ The fields are
 For filesystem volumes, initMethod can be `none` or `deleteFiles`.
 For block volumes, initMethod can be `none`, `dd` or `blkdiscard`.
 
-Note: `blkdiscard` will only work for devices that support [TRIM](https://en.wikipedia.org/wiki/Trim_%28computing%29). For AWS please refer to the [storage volumes guide](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html#instance-store-volumes) to check TRIM support. If trim is not supported please use the slower `dd` in the case your devices need initialization. For other devices please verify the support for TRIM command.
+:::note
+`blkdiscard` will only work for devices which support [TRIM](https://en.wikipedia.org/wiki/Trim_%28computing%29). For AWS please refer to the [storage volumes guide](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html#instance-store-volumes) to check TRIM support. If TRIM is not supported please use the slower `dd` if your devices need initialization. For other devices please verify the support for TRIM command.
+:::
 
 ### Volume
 
-Describes volumes to be created and attached to the init containers, main Aerospike container as well as other sidecars. 
-
-The fields are
+Describes volumes to be created and attached to the init containers and main Aerospike container, as well as other sidecars.
 
 | Field                                     | Required | Type                                | Default | Description                                                                                                                                                                                                                                                                                                                             |
 | ----------------------------------------- | -------- | ----------------------------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -268,21 +232,21 @@ The fields are
 For filesystem volumes, initMethod can be `none` or `deleteFiles`.
 For block volumes, initMethod can be `none`, `dd` or `blkdiscard`.
 
-Note: `blkdiscard` will only work for devices that support [TRIM](https://en.wikipedia.org/wiki/Trim_%28computing%29). For AWS please refer to the [storage volumes guide](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html#instance-store-volumes) to check TRIM support. If trim is not supported please use the slower `dd` in the case your devices need initialization. For other devices please verify the support for TRIM command.
+:::note
+`blkdiscard` will only work for devices that support [TRIM](https://en.wikipedia.org/wiki/Trim_%28computing%29). For AWS please refer to the [storage volumes guide](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html#instance-store-volumes) to check TRIM support. If TRIM is not supported please use the slower `dd` if your devices need initialization. For other devices please verify the support for TRIM command.
+:::
 
 #### Aerospike Server Volume Attachment
-Specifies attaching a volume to the main Aerospike server container.
 
-The fields are
+Specifies attaching a volume to the main Aerospike server container.
 
 | Field                                     | Required | Type                                | Default | Description                                                                                                                                                                                                                                                                                                                             |
 | ----------------------------------------- | -------- | ----------------------------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | path                                      | Yes      | String                              |         | The path to attach the volume to the Aerospike Container.|
 
 #### Volume Attachment
-Specifies attaching a volume to a sidecar container.
 
-The fields are
+Specifies attaching a volume to a sidecar container.
 
 | Field                                     | Required | Type                                | Default | Description                                                                                                                                                                                                                                                                                                                             |
 | ----------------------------------------- | -------- | ----------------------------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -291,13 +255,17 @@ The fields are
 
 
 #### Volume Source
-A Volume source specifies the source for an attached volume. Volumes are created using a volume source that can be one of the following
+
+A Volume source specifies the source for an attached volume. Volumes are created using a volume source that can be one of the following:
+
+* Persistent volume
+* EmptyDir
+* Secret
+* ConfigMap
 
 #### Persistent Volume
 
 Specifies a persistent volume to claim and attach to Aerospike pods.
-
-The fields are
 
 | Field                                     | Required | Type                                | Default | Description                                                                                                                                                                                                                                                                                                                             |
 | ----------------------------------------- | -------- | ----------------------------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -311,10 +279,9 @@ The fields are
 
 
 #### EmptyDir
-[EmptyDir](https://v1-19.docs.kubernetes.io/docs/concepts/storage/volumes/#emptydir) are volumes to be used as temporary working disk space.
-See [EmptyDirVolumeSource](https://pkg.go.dev/k8s.io/api/core/v1#EmptyDirVolumeSource) for options.
 
-Example
+EmptyDir are volumes to be used as temporary working disk space. See [the official documentation](https://pkg.go.dev/k8s.io/api/core/v1#EmptyDirVolumeSource) for options.
+
 ```yaml
       - name: tempFiles
         aerospike:
@@ -324,10 +291,10 @@ Example
 ```
 
 #### Secret
-A Kubernetes [secret](https://kubernetes.io/docs/concepts/configuration/secret/) can be mounted as a volume.
-You can use a secret for mounting Aerospike licence file (features.conf) or sensitive files like TLS certificates and credentials onto the containers.
 
-Example
+A Kubernetes Secret can be mounted as a volume. You can use a Secret for mounting the Aerospike license file (features.conf) or sensitive files like TLS certificates and credentials onto the containers.
+
+
 ```yaml
 - name: aerospike-config-secret
         source:
@@ -338,10 +305,9 @@ Example
 ```
 
 #### ConfigMap
-A Kubernetes [ConfigMap](https://kubernetes.io/docs/concepts/configuration/configmap/) can be mounter as  a volume.
-A config map hold non-confidential data which could be configuration four applications running in your custom init-containers or sidecars.
 
-Example
+A Kubernetes ConfigMap can be mounted as  a volume. ConfigMaps hold non-confidential data like configuration for applications running in your custom init containers or sidecars.
+
 ```yaml
 - name: app-config
     source:
@@ -361,8 +327,6 @@ Example
 
 This section configures the policy for validating the cluster CR.
 
-The fields in this structure are
-
 | Field                                              | Required | Type    | Default | Description                                                                                  |
 | -------------------------------------------------- | -------- | ------- | ------- | -------------------------------------------------------------------------------------------- |
 | skipWorkDirValidate     <br /><sub>`Dynamic`</sub> | No       | Boolean | false   | If true skips validating that the Aerospike work directory is stored on a persistent volume. |
@@ -374,11 +338,9 @@ This section configures IP and port types used for access, alternate access, TLS
 
 Three types of endpoint configurations are supported.
 
-- pod - uses the Kubernetes pod IP and Aerospike port that will work from other pods in the same Kubernetes cluster
-- hostInternal - uses the Kubernetes cluster node's host IP and a mapped Aerospike port that will work from the VPC or internal network used by the Kubernetes cluster.
-- hostExternal - uses the Kubernetes cluster node's host external/public IP and a mapped Aerospike port that should work even from outside the Kubernetes network.
-
-The fields in this structure are
+* **pod** uses the Kubernetes pod IP and Aerospike port that works to connect from other pods in the same Kubernetes cluster.
+* **hostInternal** uses the Kubernetes cluster node's host IP and a mapped Aerospike port that works to connect from the VPC or internal network used by the Kubernetes cluster.
+* **hostExternal** uses the Kubernetes cluster node's host external/public IP and a mapped Aerospike port that works to connect from the external network.
 
 | Field                                                                   | Required | Type                                   | Default      | Description                                     |
 | ----------------------------------------------------------------------- | -------- | -------------------------------------- | ------------ | ----------------------------------------------- |
@@ -401,7 +363,7 @@ If the Aerospike cluster has security enabled an entry for the "admin" user havi
 
 ### Aerospike Role
 
-Configures roles to have in the Aerospike cluster.
+Configures roles for the Aerospike cluster.
 
 | Field                                      | Required | Type            | Default | Description                        |
 | ------------------------------------------ | -------- | --------------- | ------- | ---------------------------------- |
@@ -413,7 +375,7 @@ Configures roles to have in the Aerospike cluster.
 
 ### Aerospike User
 
-Configures users to have for the aerospike cluster.
+Configures users for the Aerospike cluster.
 
 | Field                                       | Required | Type            | Default | Description                                             |
 | ------------------------------------------- | -------- | --------------- | ------- | ------------------------------------------------------- |
@@ -432,12 +394,11 @@ Configures the name of the secret to use and the mount path to mount the secret 
 
 ## Aerospike Config
 
-The YAML form of Aerospike server configuration.
-See [Aerospike Configuration](Aerospike-configuration-mapping.md) for details.
+The YAML form of Aerospike server configuration. See [Aerospike Configuration](Aerospike-configuration-mapping.md) for details.
 
 ## Rack Config
 
-Configures the operator to deploy rack aware Aerospike cluster. Pods will be deployed in given racks based on the given configuration.
+Configures the operator to deploy a rack-aware Aerospike cluster. Pods will be deployed in given racks based on the given configuration.
 
 | Field                                                       | Required | Type               | Default | Description                                                          |
 | ----------------------------------------------------------- | -------- | ------------------ | ------- | -------------------------------------------------------------------- |
@@ -448,7 +409,7 @@ See [Rack awareness](Rack-Awareness.md) for details.
 
 ### Rack
 
-Rack specifies single rack config
+Specifies single rack config
 
 | Field                                                             | Required | Type      | Default | Description                                                                                                                                                                                                                                                                                                                                               |
 | ----------------------------------------------------------------- | -------- | --------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -462,7 +423,8 @@ Rack specifies single rack config
 | podSpec  <br /><sub>`Dynamic`</sub>                               | No       | Structure |         | Pod overrides for this rack. See [Rack Pod Overrides](#rack-pod-overrides) for details.|
 
 #### Rack Pod Overrides
-Provides rack specific overrides to the [Pod spec](#pod-spec).
+
+Provides rack-specific overrides to the Pod spec.
 
 The following overrides are supported.
 
@@ -476,23 +438,16 @@ The following overrides are supported.
 
 Creates additional Kubernetes service that allow clients to discover Aerospike cluster nodes.
 
-The fields are
-
 | Field                                                             | Required | Type      | Default | Description                                                                                                                                                                                                                                                                                                                                               |
 | ----------------------------------------------------------------- | -------- | --------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | loadBalancer                                                      | No      | Structure   |         | Creates a load balancer service that allows Aerospike clients to discover Aerospike cluster nodes. See [#load balancer Service](#load-balancer-service) for details.                                                                                                                                                                                                                                                                                                                                  |
 
-### Load balancer service
-Creates a load balancer service that allows Aerospike clients to discover Aerospike cluster nodes. 
+### Load Balancer Service
+
+Creates a load balancer service which lets Aerospike clients discover Aerospike cluster nodes.
 
 | Field                                                             | Required | Type      | Default | Description                                                                                                                                                                                                                                                                                                                                               |
 | ----------------------------------------------------------------- | -------- | --------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | externalTrafficPolicy                                                      | No      | Enum - Local, Cluster   |         |External Traffic Policy Type string. See [ServiceExternalTrafficPolicyType](https://pkg.go.dev/k8s.io/api/core/v1#ServiceExternalTrafficPolicyType) for details.|
 | annotations | No       | Map from annotation name to its value |         | Kubernetes Annotations for the load balancer. |
 | port | No       |  |         | Exposed port on load balancer. If not specified targetPort is used. |
-
-## Next
-
-- [Scale up/down](Scaling.md)
-- [Aerospike version upgrade/downgrade](Version-upgrade.md)
-- [Aerospike configuration change](Aerospike-configuration-change.md)

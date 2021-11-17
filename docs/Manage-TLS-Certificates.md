@@ -3,19 +3,12 @@ title: Manage TLS Certificates
 description: Manage TLS Certificates
 ---
 
-Here we describe setting up a TLS enabled Aerospike cluster.
+To set up a TLS-enabled Aerospike cluster, first use kubectl to create a Kubernetes Secret which contains the TLS certificates and key. For example, the command create a Secret from the contents of the `config/samples/secrets` folder is:
 
-For more details, visit [TLS configuration](https://docs.aerospike.com/docs/configure/network/tls/).
-
-## Create a secret containing TLS certificates and key.
-
-Assuming your TLS secrets are in config/samples/secrets folder, create a Kubernetes secret like so
-```sh
-$ kubectl create secret generic aerospike-secret --from-file=config/samples/secrets -n aerospike
+```shell
+kubectl create secret generic aerospike-secret --from-file=config/samples/secrets -n aerospike
 ```
-
-## Create the TLS specific Aerospike configuration.
-TLS specific config for the Aerospike cluster CR file.
+Next, add the TLS-specific configuration to the Aerospike cluster's CR file.
 
 ```yaml
   storage:
@@ -69,9 +62,13 @@ TLS specific config for the Aerospike cluster CR file.
           ca-file: /etc/aerospike/secret/cacert.pem
 
 ```
-Get full CR file [here](https://github.com/aerospike/aerospike-kubernetes-operator/tree/2.0.0-rc1/config/samples/tls_cluster_cr.yaml).
 
-## Deploy the cluster
-Follow the instructions [here](Create-Aerospike-cluster.md#deploy-aerospike-cluster) to deploy this configuration.
+For the full CR file, see the [example TLS cluster CR](https://github.com/aerospike/aerospike-kubernetes-operator/blob/master/config/samples/tls_cluster_cr.yaml).
 
+This and other example CRs are stored in [the main Aerospike Kubernetes Operator repository](https://github.com/aerospike/aerospike-kubernetes-operator/tree/master/config/samples).
 
+Save and exit the file, then use kubectl to apply the change.
+
+```shell
+kubectl apply -f aerospike-cluster.yaml
+```

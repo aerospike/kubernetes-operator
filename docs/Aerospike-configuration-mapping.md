@@ -6,19 +6,17 @@ description: Aerospike Configuration Mapping
 
 ## Mapping Between YAML and Aerospike Configuration
 
-Kubernetes uses [YAML](https://YAML.org/) to express its configuration whereas the Aerospike DB uses [it's own format for configuration](https://docs.aerospike.com/docs/configure/index.md) which it stores in `aerospike.conf`.
+Kubernetes uses YAML configuration files whereas the Aerospike DB uses its own format for configuration. The Aerospike DB configurations are stored in `aerospike.conf`.
 
-The Aerospike Kubernetes Operator translates it's YAML configurations to the Aerospike server's own `aerospike.conf` format.
-
-Different Aerospike DB versions have may have different `aerospike.conf` representations. Please check [config-schemas](https://github.com/aerospike/aerospike-kubernetes-operator/tree/2.0.0-rc1/docs/config-schemas) for JSON schemas for all supported versions.
+The Aerospike Kubernetes Operator translates its YAML configurations to the Aerospike server's `aerospike.conf` format.
 
 ## Translation Conventions
 
-These are the rules we used to translate between Kubernetes' YAML and Aerospike's `aerospike.conf` format.
+These are the rules we used to translate between the Aerospike Kubernetes Operator's YAML and Aerospike DB's `aerospike.conf` format.
 
 ### Simple Key and Values
 
-Simple key value pairs file translate directly with the exception being [storage sizes](Aerospike-configuration-mapping.md#storage-sizes).
+Most simple key-value pairs file translate directly, with the exception of storage sizes.
 
 YAML
 
@@ -27,7 +25,7 @@ replication-factor: 2
 memory-size: 4294967296
 ```
 
-`aerospike.conf`
+aerospike.conf
 
 ```
 replication-factor 2
@@ -36,7 +34,7 @@ memory-size 4G
 
 ### Storage Sizes
 
-Memory, file, and devices sizes in the YAML format are integers and need to be specified as number of bytes. In `aerospike.conf` one may optionally provide a unit as a string.
+Memory, file, and device sizes in the YAML format are integers and need to be specified as number of bytes. In `aerospike.conf` one may optionally provide a unit as a string.
 
 YAML
 
@@ -49,7 +47,7 @@ Or
 memory-size: 419430400  # 400M
 ```
 
-`aerospike.conf`
+aerospike.conf
 
 ```
 memory-size 4G
@@ -70,7 +68,7 @@ addresses:
   - 192.168.5.1
 ```
 
-`aerospike.conf`
+aerospike.conf
 
 ```
 address 192.168.1.1
@@ -85,7 +83,7 @@ files:
   - /opt/aerospike/ns2.dat
 ```
 
-`aerospike.conf`
+aerospike.conf
 
 ```
 file /opt/aerospike/ns1.dat
@@ -104,7 +102,7 @@ service:
   proto-fd-max: 15000
 ```
 
-`aerospike.conf`
+aerospike.conf
 
 ```
 service {
@@ -115,7 +113,7 @@ service {
 
 ### Named Sections
 
-Named sections which can have multiple named entries in `aerospike.conf` file (eg `namespace`, `dc`, `datacenter`, etc.) will be translated to a named list of maps in YAML
+Named sections which can have multiple named entries in `aerospike.conf` file (eg `namespace`, `dc`, `datacenter`, etc.) will be translated to a named list of maps in YAML.
 
 The name of the list will be the plural form of the `aerospike.conf` section.
 
@@ -140,7 +138,7 @@ namespaces:
       type: memory
 ```
 
-`aerospike.conf`
+aerospike.conf
 
 ```
 namespace test {
@@ -163,10 +161,7 @@ namespace bar {
 
 ### Typed Sections
 
-Typed sections have a fixed enum type associated with them in `aerospike.conf` file (eg `storage-engine`, `index-type`, etc.) and will be translated to map with additional property `type` in YAML.
-The valid values for type will be the valid enum values for the section.
-
-For e.g. storage-engine type property can have values memory, device, pmem.
+Typed sections have a fixed enum type associated with them in `aerospike.conf` (eg `storage-engine`, `index-type`, etc.) and will be translated to map with additional property `type` in YAML. The valid values for type will be the valid enum values for the section.
 
 YAML
 
@@ -184,7 +179,7 @@ namespaces:
       data-in-memory: true
 ```
 
-`aerospike.conf`
+aerospike.conf
 
 ```
 namespace test {
@@ -244,7 +239,7 @@ mod-lua:
   user-path: /opt/aerospike/usr/udf/lua
 ```
 
-`aerospike.conf`
+aerospike.conf
 
 ```
 

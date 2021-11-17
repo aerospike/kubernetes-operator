@@ -19,19 +19,19 @@ See the [Cluster Configuration Settings](Cluster-configuration-settings.md) sect
 
 Use `kubectl describe` to get the IP addresses and port numbers:
 
-```sh
+```shell
  kubectl -n [namespace] describe aerospikecluster [Aerospike_cluster name]
 ```
 
-For example, to get the IP addresses and port numbers for the cluster `aerocluster` in the `aerospike` namespace is:
+For example, to get the IP addresses and port numbers for the cluster `aerocluster` in the `aerospike` namespace:
 
-```sh
+```shell
 kubectl -n aerospike describe aerospikecluster aerocluster
 ```
 
-The **Status > Pods*** section provides pod-wise access, alternate access, TLS access, and TLS alternate access endpoints as well as TLS name (if TLS is configured) to be used to access the cluster.
+The **Status > Pods** section provides pod-wise access, alternate access, TLS access, and TLS alternate access endpoints as well as TLS name (if TLS is configured) to be used to access the cluster.
 
-```sh
+```shell
 $ kubectl -n aerospike describe aerospikecluster aerocluster
 Name:         aerocluster
 Namespace:    aerospike
@@ -107,15 +107,18 @@ Status:
 
 ```
 
-## Connecting to the cluster
+## Connect to the Cluster
+
 When connecting from outside the Kubernetes cluster network, you need to use the host external IPs. By default, the Operator configures access endpoints to use Kubernetes host internal IPs and alternate access endpoints to use host external IPs.
 
 Please refer to [network policy](Cluster-configuration-settings.md#network-policy) configuration for details.
 
 From the example status output, for pod aerocluster-0-0, the alternate access endpoint is 34.70.193.192:31312
 
-### With client
+### With a Client
+
 To use a client from outside the Kubernetes network using external IPs set the following for the client policy using appropriate client API.
+
 ```yaml
 host: 34.70.193.192
 port: :31312
@@ -124,7 +127,8 @@ password: admin123 # based on the configured secret
 use-services-alternate: true
 ```
 
-To use asadm from within the Kubernetes network run
+To use asadm from within the Kubernetes network run:
+
 ```yaml
 host: 10.128.15.225
 port: :31312
@@ -134,18 +138,21 @@ use-services-alternate: false
 ```
 
 ### With asadm
+
 With kubectl
-```sh
-# kubectl run -it --rm --restart=Never aerospike-tool -n aerospike --image=aerospike/aerospike-tools:latest -- asadm -h <cluster-name> -U <user> -P <password>
-kubectl run -it --rm --restart=Never aerospike-tool -n aerospike --image=aerospike/aerospike-tools:latest -- asadm -h aeroclustersrc -U admin -P admin123
+
+```shell
+kubectl run -it --rm --restart=Never aerospike-tool -n aerospike --image=aerospike/aerospike-tools:latest -- asadm -h [cluster name] -U [username] -P [password]
 ```
 
 To use asadm from outside the Kubernetes network:
-```sh
-$ asadm -h 34.70.193.192:31312 -U admin -P admin123 --services-alternate
+
+```shell
+asadm -h 34.70.193.192:31312 -U [username] -P [password] --services-alternate
 ```
 
 To use asadm from within the Kubernetes network:
-```sh
-$ asadm -h 10.128.15.225:31312 -U admin -P admin123
+
+```shell
+asadm -h 10.128.15.225:31312 -U [username] -P [password]
 ```

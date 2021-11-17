@@ -3,11 +3,23 @@ title: Install the Operator On Kubernetes
 description: Install The Operator On Kubernetes
 ---
 
-To begin, create a new Kubernetes cluster on the platform of your choice, and configure kubectl to use that cluster.
+To begin, create a new Kubernetes cluster on the platform of your choice, and configure kubectl to use that cluster. See the [Requirements page](System-Requirements.md) for Kubernetes version and other requirements.
+
+## Operator Overview
+
+The Aerospike Kubernetes Operator makes it easier for you to use Aerospike Enterprise clusters on Kubernetes. Instead of making changes to the cluster by hand, you specify changes in the Aerospike cluster CR file and use `kubectl apply` to apply these changes. The Operator picks up on the changes and does what it needs to do in order to make them happen.
+
+For example, to add Rack Awareness to your Aerospike cluster, add a rack-aware section to the CR as described in [Rack Awareness](Rack-Awareness.md). Use `kubectl apply -f` to apply the CR, and the Operator deploys Rack Awareness as specified.
+
+This documentation includes examples of various Aerospike configuration settings and possibilities you can use with your Aerospike cluster on Kubernetes. If you have questions, suggestions, or other feedback, please let us know.
 
 ## Install the Operator Lifecycle Manager (OLM)
 
 We recommend using [Operator Lifecycle Manager (OLM)](https://olm.operatorframework.io/]) to run and manage the Aerospike Kubernetes Operator in production environments. OLM is the preferred way to manage Kubernetes operators in production.
+
+:::note
+If you are deploying on OpenShift/OKD, you can skip this step. OLM is pre-installed on OpenShift.
+:::
 
 Install OLM on your Kubernetes cluster with the command:
 
@@ -58,7 +70,7 @@ operator-sdk run bundle docker.io/aerospike/aerospike-kubernetes-operator-bundle
 
 ## RBAC
 
-For information on working with RBAC on multiple clusters, see [RBAC for other namespace](Multiple-Aerospike-clusters.md#rbac-for-other-namespaces).
+For information on working with RBAC on multiple clusters, see [RBAC for other namespace](Multiple-Aerospike-clusters.md).
 
 ## Verify the Operator is Running
 

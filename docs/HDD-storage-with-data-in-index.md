@@ -3,12 +3,10 @@ title: HDD Storage With Data In Index
 description: HDD Storage With Data In Index
 ---
 
-Here we provide configuration for a specialized namespace where records have a single-bin and fit in 8 bytes.
+This example sets up a specialized namespace where records have a single-bin and fit in 8 bytes.
 
-For more details, visit [configuration of HDD Storage Engine with Data in Index Engine](https://docs.aerospike.com/docs/configure/namespace/storage/#recipe-for-a-hdd-storage-engine-with-data-in-index-engine).
+To set this up, add the following storage-specific configuration to the Aerospike cluster's CR file.
 
-## Create the namespace configuration
-Following is the storage-specific config for the Aerospike cluster CR file.
 ```yaml
   storage:
     filesystemVolumePolicy:
@@ -77,7 +75,13 @@ Following is the storage-specific config for the Aerospike cluster CR file.
           filesize: 2000000000
           data-in-memory: true
 ```
-Get full CR file [here](https://github.com/aerospike/aerospike-kubernetes-operator/tree/2.0.0-rc1/config/samples/hdd_dii_storage_cluster_cr.yaml).
 
-## Deploy the cluster
-Follow the instructions [here](Create-Aerospike-cluster.md#deploy-aerospike-cluster) to deploy this configuration.
+For the full CR file, see the [example HDD storage with data-in-index cluster CR](https://github.com/aerospike/aerospike-kubernetes-operator/blob/master/config/samples/hdd_dii_storage_cluster_cr.yaml).
+
+This and other example CRs are stored in [the main Aerospike Kubernetes Operator repository](https://github.com/aerospike/aerospike-kubernetes-operator/tree/master/config/samples).
+
+Save and exit the CR file, then use kubectl to apply the change.
+
+```shell
+kubectl apply -f aerospike-cluster.yaml
+```

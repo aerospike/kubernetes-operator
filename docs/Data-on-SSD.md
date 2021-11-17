@@ -3,12 +3,11 @@ title: Data On SSD
 description: Data On SSD
 ---
 
-Here we provide namespace storage configuration for storing namespace data on a provisioned SSD storage device.
+The following storage configuration sets up the Aerospike cluster to store namespace data on a provisioned SSD storage device.
 
 For more details, visit [configuration of SSD Storage Engine](https://docs.aerospike.com/docs/configure/namespace/storage/#recipe-for-an-ssd-storage-engine).
 
-## Create the namespace configuration
-Following is the Storage specific config for aerospike cluster CR file.
+To set this up, add the following storage-specific configuration to the Aerospike cluster's CR file.
 
 ```yaml
   storage:
@@ -58,7 +57,13 @@ Following is the Storage specific config for aerospike cluster CR file.
           devices:
             - /test/dev/xvdf
 ```
-Get full CR file [here](https://github.com/aerospike/aerospike-kubernetes-operator/tree/2.0.0-rc1/config/samples/ssd_storage_cluster_cr.yaml).
 
-## Deploy the cluster
-Follow the instructions [here](Create-Aerospike-cluster.md#deploy-aerospike-cluster) to deploy this configuration.
+For the full CR file, see the [example SSD storage cluster CR](https://github.com/aerospike/aerospike-kubernetes-operator/blob/master/config/samples/ssd_storage_cluster_cr.yaml).
+
+This and other example CRs are stored in [the main Aerospike Kubernetes Operator repository](https://github.com/aerospike/aerospike-kubernetes-operator/tree/master/config/samples).
+
+Save and exit the CR file, then use kubectl to apply the change.
+
+```shell
+kubectl apply -f aerospike-cluster.yaml
+```

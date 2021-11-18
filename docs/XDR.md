@@ -3,12 +3,14 @@ title: XDR
 description: XDR
 ---
 
-To deploy a cluster as XDR source, you should configure `dc-security-config-file` config in CR file in `aerospikeConfig.xdr.datacenter` section. Also configure `dc-node-address-port` in same section for destination DC. After configuring these values in the CR file  apply CR file to deploy the cluster.
+To deploy a cluster as a cross-datacenter replication (XDR) source, configure `dc-security-config-file` and `dc-node-address-port`  in the `aerospikeConfig.xdr.datacenter` section of the CR file. After updating these configurations in the CR file, apply the CR file to deploy the cluster.
 
-For more details, visit [configure cross-datacenter](https://docs.aerospike.com/docs/configure/cross-datacenter/)
+For more information, see [the documentation on cross-datacenter replication (XDR)](https://docs.aerospike.com/docs/architecture/xdr.html).  
 
-## Enable XDR and create a remote DC
-Following is the XDR specific config for the Aerospike cluster CR file.
+## Enable XDR and Create a Remote DC
+
+This example is the XDR-specific config section for the Aerospike cluster CR file.
+
 ```yaml
 storage:
   filesystemVolumePolicy:
@@ -45,7 +47,7 @@ storage:
           secretName: aerospike-secret
       aerospike:
         path: /etc/aerospike/secret
-        
+
   aerospikeConfig:
     logging:
       - name: /var/log/aerospike/aerospike.log
@@ -88,10 +90,15 @@ storage:
           data-in-memory: true
 
 ```
-Get full CR file [here](https://github.com/aerospike/aerospike-kubernetes-operator/tree/2.0.0-rc1/config/samples/xdr_src_cluster_cr.yaml).
+
+For the full CR file, see the [example XDR CR](https://github.com/aerospike/aerospike-kubernetes-operator/blob/master/config/samples/xdr_src_cluster_cr.yaml).
+
+This and other example CRs are stored in [the main Aerospike Kubernetes Operator repository](https://github.com/aerospike/aerospike-kubernetes-operator/tree/master/config/samples).
+
 
 ## Remote DC Credentials
-If destination cluster is security enabled then `aerospike-secret` created in this section should also have `security_credentials_DC1.txt` file for destination DC.
+
+If the destination cluster has security enabled then `aerospike-secret` created in this section should also have a `security_credentials_DC1.txt` file for the destination DC.
 
 ```sh
 $ cat security_credentials_DC1.txt
@@ -101,6 +108,3 @@ credentials
    password xdr_pass
 }
 ```
-
-## Deploy the cluster
-Follow the instructions [here](Create-Aerospike-cluster.md#deploy-aerospike-cluster) to deploy this configuration.

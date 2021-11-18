@@ -3,16 +3,16 @@ title: Storage Provisioning
 description: Storage Provisioning
 ---
 
-You need to set up [storage classes](https://kubernetes.io/docs/concepts/storage/storage-classes/) to use persistent storage external to the containers. These storage classes are used for dynamically provisioning the persistent storage demanded by users in aerospike CR configuration. Persistent storage on the pods will use these storage class provisioners to provision storage.
+In order to use persistent storage external to the pods, you need to set up storage classes. Storage classes are used to dynamically provision the persistent storage required by users in the Aerospike CR configuration.
 
-The storage configuration depends on the environment the Kubernetes cluster is deployed. For e.g. different cloud providers supply their own implementations of storage provisioners that dynamically create and attach storage devices to the containers.
+The specific storage configuration depends on the environment in which you deploy your Kubernetes cluster. Each cloud provider has their own way to set up storage provisioners which dynamically create and attach storage devices to the containers.
 
-Before deploying an Aerospike cluster that uses persistent storage, you need to create a **storage-class.yaml**  file, that defines the storage classes and then apply them onto the Kubernetes cluster.
+To deploy an Aerospike cluster with persistent storage, create a **storage-class.yaml** file. Add the storage class configurations to this file, then use kubectl to apply these changes to the cluster.
 
 
-## Google cloud storage classes
+## Google Cloud
 
-The following **storage-class.yaml** file uses the Google Cloud GCE provisioner to create a storage class called **ssd**.
+The following **storage-class.yaml** file uses the GCE provisioner to create a storage class called **ssd**.
 
 ```yaml
 apiVersion: storage.k8s.io/v1
@@ -26,49 +26,50 @@ parameters:
 
 ## Local volume
 
-In this example, there is a local SSD (identified as `/dev/nvme0n1`). This should be attached to each Kubernetes worker node which will be used for getting the primary storage device for Aerospike Cluster deployment.
+This example uses a local SSD (identified as `/dev/nvme0n1`). Attach this SSD to each Kubernetes worker node which will be used for getting the primary storage device for the Aerospike cluster deployment.
 
-### Create discovery directory and link the devices
+### Create a Discovery Directory
 
 Before deploying local volume provisioner, create a discovery directory on each worker node and link the block devices to be used in the discovery directory. The provisioner will discover local block volumes from this directory.
 
-```
+```shell
 $ lsblk
 NAME    MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
 nvme0n1       8:16   0  375G  0 disk
 nvme0n2       8:32   0  375G  0 disk
 ```
 
-```sh
-$ mkdir /mnt/disks
-$ sudo ln -s /dev/nvme0n1 /mnt/disks/
-$ sudo ln -s /dev/nvme0n2 /mnt/disks/
+```shell
+mkdir /mnt/disks
+sudo ln -s /dev/nvme0n1 /mnt/disks/
+sudo ln -s /dev/nvme0n2 /mnt/disks/
 ```
 
 :::note
-You can use also your own discovery directory, but make sure that the [provisioner](https://github.com/aerospike/aerospike-kubernetes-operator/tree/2.0.0-rc1/config/samples/storage/aerospike_local_volume_provisioner.yaml) is also configured to point to the same directory.
+You can use also your own discovery directory, but make sure that the provisioner is also configured to point to the same directory.
 :::
 
-### Configure and deploy local volume provisioner
+### Deploy the Local Volume Provisioner
 
 To automate the local volume provisioning, we will create and run a provisioner based on [kubernetes-sigs/sig-storage-local-static-provisioner](https://github.com/kubernetes-sigs/sig-storage-local-static-provisioner).
 
-The provisioner will run as a `DaemonSet` which will manage the local SSDs on each node based on a discovery directory, create/delete the PersistentVolumes and clean up the storage when it is released.
+The provisioner will run as a DaemonSet which will manage the local SSDs on each node based on a discovery directory, create/delete the PersistentVolumes, and clean up the storage when it is released.
 
 The local volume static provisioner for this example is defined in [aerospike_local_volume_provisioner.yaml](https://github.com/aerospike/aerospike-kubernetes-operator/tree/2.0.0-rc1/config/samples/storage/aerospike_local_volume_provisioner.yaml).
 
-The storage class yaml is defined in [local_storage_class.yaml](https://github.com/aerospike/aerospike-kubernetes-operator/tree/2.0.0-rc1/config/samples/storage/local_storage_class.yaml).
+The storage class is defined in [local_storage_class.yaml](https://github.com/aerospike/aerospike-kubernetes-operator/blob/master/config/samples/storage/local_storage_class.yaml). This and other example CRs are stored in [the main Aerospike Kubernetes Operator repository](https://github.com/aerospike/aerospike-kubernetes-operator/tree/master/config/samples).
 
-Create local storage class and then deploy the provisioner.
+Create local storage class, then deploy the provisioner.
 
-```sh
-$ kubectl create -f config/samples/storage/local_storage_class.yaml
+```shell
+kubectl create -f local_storage_class.yaml
 
-$ kubectl create -f config/samples/storage/aerospike_local_volume_provisioner.yaml
+kubectl create -f aerospike_local_volume_provisioner.yaml
 ```
 
-Verify the discovered and created PV objects,
-```sh
+Verify the persistent volumes have been created.
+
+```shell
 $ kubectl get pv
 
 NAME                CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS      CLAIM   STORAGECLASS     REASON   AGE

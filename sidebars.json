@@ -139,11 +139,14 @@
           {
             "type": "doc",
             "id": "HDD-storage-with-data-in-memory"
-          }
-        ],
+          },
+        {
+          "type": "doc",
+          "id": "Shadow-device"
+        }
+      ],
         "collapsible": true,
         "collapsed": false
       }
     ]
   }
-  

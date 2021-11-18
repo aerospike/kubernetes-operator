@@ -3,13 +3,11 @@ title: Scaling Namespace Storage
 description: Scaling Namespace Storage
 ---
 
-Scaling namespace storage (vertical scaling) is a bit complex. The Operator uses k8s StatefulSet for deploying Aerospike-cluster. StatefulSet uses PersistentVolumeClaim for providing storage. Currently a PersistentVolumeClaim cannot be updated. Hence the Operator can not provide a simple solution for vertical scaling.
+Scaling namespace storage (vertical scaling) can be a complex topic. The Operator uses Kubernetes StatefulSet for deploying Aerospike clusters. StatefulSet uses PersistentVolumeClaim for providing storage. Currently a PersistentVolumeClaim cannot be updated under these circumstances, which prevents the Operator from providing a simple solution for vertical scaling.
 
-## Aerospike Rack Awareness for Vertical Scaling
+We recommend using the Aerospike Rack Awareness feature to perform vertical scaling.
 
-To perform vertical scaling, the Aerospike Rack Awareness feature can be applied.
-
-For this example, we assume that cluster is deployed with the name `aerospike-cluster.yaml`.
+For this example, we assume that cluster is deployed with the CR file `aerospike-cluster.yaml`.
 
 ```yaml
 apiVersion: asdb.aerospike.com/v1beta1
@@ -55,7 +53,7 @@ spec:
                   secretName: aerospike-secret
               aerospike:
                 path: /etc/aerospike/secret
-        
+
   aerospikeConfig:
     service:
       feature-key-file: /etc/aerospike/secret/features.conf
@@ -74,13 +72,11 @@ spec:
 .
 ```
 
-## Create a new rack
+## Create a New Rack
 
-Now if we want to resize `/dev/sdf` for namespace `test` then we have to create a new `rack` inside `rackConfig` with updated `storage` config and remove the old rack.
+In order to resize `/dev/sdf` for namespace `test`  we have to create a new `rack` inside `rackConfig` with updated `storage` config and remove the old rack.
 
-The new rack can be created in same physical rack using existing `zone/region` (if there is enough space) to hold new storage and old storage together.
-
-## Update the `rackConfig` section
+The new rack can be created in the same physical rack using existing `zone/region` (if there is enough space) to hold new storage and old storage together.
 
 ```yaml
 apiVersion: asdb.aerospike.com/v1beta1
@@ -146,13 +142,15 @@ spec:
 .
 ```
 
-## Apply the change
-```sh
-$ kubectl apply -f aerospike-cluster.yaml
-```
-This will create a new rack with `id: 2` and updated `storage` config. Old data will be migrated to new rack. Old rack will be removed gracefully.
+Save and exit the CR file, then use kubectl to apply the change.
 
-## Check the pods
+```shell
+kubectl apply -f aerospike-cluster.yaml
+```
+
+This creates a new rack with `id: 2` and updated `storage` config. The old data will be migrated to new rack. The old rack will be removed gracefully.
+
+Check the pods.
 
 ```sh
 $ kubectl get pods -n aerospike

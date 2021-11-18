@@ -3,17 +3,12 @@ title: Shadow Device
 description: Shadow Device
 ---
 
-## Description
-This is specific to cloud environments. Here namespace storage-engine can be configured to use extremely high-performance cloud instance attached local SSDs that are ephemeral. Writes will also be duplicated to another network-attached shadow device for persistence in case the cloud instance terminates.
+In cloud environments, the namespace storage engine can be configured to use extremely high-performance cloud instance-attached local SSDs. Under this setup, writes will be duplicated to another network-attached shadow device for persistence in case the cloud instance terminates.
 
-For more details, visit [configuration of shadow devices](https://docs.aerospike.com/docs/configure/namespace/storage/#recipe-for-shadow-device).
+To set this up, first follow the instructions in our [storage provisioning guide](Storage-provisioning.md) to create a local volume provisioner and appropriate storage class.
 
+Next, add the following storage-specific configuration to the Aerospike cluster's CR file.
 
-## Create a local provisioner and local storage class
-Follow the instructions [here](Storage-provisioning.md#local-volume) to create a local volume provisioner and appropriate storage class.
-
-## Create the namespace configuration
-Storage specific config for aerospike cluster CR file.
 ```yaml
   storage:
     filesystemVolumePolicy:
@@ -69,7 +64,13 @@ Storage specific config for aerospike cluster CR file.
           devices:
             - /dev/nvme0n1 /dev/sdf
 ```
-Get full CR file [here](https://github.com/aerospike/aerospike-kubernetes-operator/tree/2.0.0-rc1/config/samples/shadow_device_cluster_cr.yaml).
 
-## Deploy the cluster
-Follow the instructions [here](Create-Aerospike-cluster.md#deploy-aerospike-cluster) to deploy this configuration.
+For the full CR file, see the [example shadow device cluster CR](https://github.com/aerospike/aerospike-kubernetes-operator/blob/master/config/samples/shadow_device_cluster_cr.yaml).
+
+This and other example CRs are stored in [the main Aerospike Kubernetes Operator repository](https://github.com/aerospike/aerospike-kubernetes-operator/tree/master/config/samples).
+
+Save and exit the CR file, then use kubectl to apply the change.
+
+```shell
+kubectl apply -f aerospike-cluster.yaml
+```

@@ -3,13 +3,15 @@ title: Rack Awareness
 description: Rack Awareness
 ---
 
-In many cloud environments, it is a best practice to build a cluster which spans multiple availability zones. Aerospike’s Rack Awareness is a good fit when you need to split the database across racks or zones. For example, if you configure a replication-factor of 2, the master copy of the partition and its replica will be stored on separate hardware failure groups. Rack Awareness provides a mechanism that allows database clients to read on a preferential basis from servers in their closely rack or zone, which can significantly reduce traffic charges by limiting cross-AZ traffic as well as provide lower latency and increased stability.
+In many situations, it's considered a "best practice" to build clusters which span multiple availability zones. Aerospike’s Rack Awareness feature lets you split your database across multiple racks or zones.
 
-For more details, visit [Rack Awareness](https://docs.aerospike.com/docs/architecture/rack-aware.md).
+For example, if you set a replication factor of 2, the master copy of the partition and its replica will be stored on separate hardware failure groups.
 
-## To add Rack Awareness
+Rack Awareness also provides a mechanism which lets database clients read on a preferential basis from servers in their nearest rack or zone. This can provide lower latency, increase stability, and significantly reduce traffic charges by limiting cross-availability-zone traffic.
 
-Rack specific config for the Aerospike cluster CR file.
+## Add Rack Awareness
+
+This example adds Rack Awareness to an existing Aerospike cluster CR file.
 
 ```yaml
   rackConfig:
@@ -66,30 +68,30 @@ Rack specific config for the Aerospike cluster CR file.
           type: memory
 ```
 
-Get full CR file [here](https://github.com/aerospike/aerospike-kubernetes-operator/tree/2.0.0-rc1/config/samples/rack_enabled_cluster_cr.yaml).
+Save and exit the CR file, then use kubectl to apply the change.
 
-## Deploy the cluster
+```shell
+kubectl apply -f aerospike-cluster.yaml
+```
 
-Follow the instructions [here](Create-Aerospike-cluster.md#deploy-aerospike-cluster) to deploy this configuration.
+For the full CR file, see the [example rack-enabled cluster CR](https://github.com/aerospike/aerospike-kubernetes-operator/blob/master/config/samples/rack_enabled_cluster_cr.yaml).
 
-## Cluster node distribution in racks
+This and other example CRs are stored in [the main Aerospike Kubernetes Operator repository](https://github.com/aerospike/aerospike-kubernetes-operator/tree/master/config/samples).
 
-Cluster nodes are distributed across racks as evenly as possible. The cluster size is divided by the number of racks to get nodes per rack. If there are remainder nodes, they are distributed one by one across racks starting from first rack.
+## Cluster Node Distribution
 
-For e.g.
+Cluster nodes are distributed across racks as evenly as possible. The cluster size is divided by the number of racks to get nodes per rack. Any remainder nodes are distributed one-by-one across racks starting from the first rack.
 
-Nodes: 10, Racks: 4
+For example, in a setup with 10 nodes spread across 4 racks, the topology is:
 
-Topology:
+* Rack 1: 3 nodes
+* Rack 2: 3 nodes
+* Rack 3: 2 nodes
+* Rack 4: 2 nodes
 
-- NodesForRack1: 3
-- NodesForRack2: 3
-- NodesForRack3: 2
-- NodesForRack4: 2
+## Add a New Rack
 
-## Adding a new rack in config
-
-Add a new rack section in config yaml file under `rackConfig.racks` section and apply config file using kubectl.
+To add a new rack, add a new section to the CR file under the `rackConfig.racks` section. Use kubectl to apply this update.
 
 ```yaml
   rackConfig:
@@ -103,11 +105,19 @@ Add a new rack section in config yaml file under `rackConfig.racks` section and 
         zone: us-central1-c
 ```
 
-Operator redistribute cluster nodes across racks whenever cluster size is updated or number of racks is changed. If user adds a rack without increasing cluster size then old racks will be scaled down and new rack will be scaled up based on new node's redistribution.
+Save and exit the CR file, then use kubectl to apply the change.
 
-## Setting rack level storage and aerospikeConfig
+```shell
+kubectl apply -f aerospike-cluster.yaml
+```
 
-Rack also provide for setting local storage and aerospikeConfig. If local storage is given for rack then rack will use this storage otherwise common global storage will be used. Here aerospikeConfig is config patch which will be merged with common global aerospikeConfig and will be used for rack.
+The Aerospike Kubernetes Operator redistributes cluster nodes across racks whenever the cluster size or the number of racks changes. If you add a rack without increasing the cluster size, the nodes will be redistributed. The number of nodes on existing racks will be scaled down, and the number of nodes on the new rack will be scaled up, per the usual topology rules.
+
+## Set Rack-Level Storage and aerospikeConfig
+
+Aerospike's Rack Awareness lets you set local storage and aerospikeConfig options. If you provide local storage for a rack, the rack will use this storage. Otherwise, common global storage will be used.
+
+In the following example, the aerospikeConfig is a patch which will be used for the rack and merged with the common global aerospikeConfig.
 
 ```yaml
   rackConfig:
@@ -116,11 +126,11 @@ Rack also provide for setting local storage and aerospikeConfig. If local storag
     racks:
       - id: 1
         zone: us-central1-b
-        
+
         aerospikeConfig:
           service:
             proto-fd-max: 18000
-            
+
         storage:
           filesystemVolumePolicy:
             cascadeDelete: true
@@ -150,22 +160,30 @@ Rack also provide for setting local storage and aerospikeConfig. If local storag
                 path: /etc/aerospike/secret
 ```
 
-## Merging AerospikeConfig
+Save and exit the CR file, then use kubectl to apply the change.
 
-Local rack AerospikeConfig patch will be merged with common global base AerospikeConfig using given rules.
+```shell
+kubectl apply -f aerospike-cluster.yaml
+```
 
-- New elements from the patch configMap then it will be added to base configMap
-- Base element will be replaced with a new patch element if
-  - Element value type is changed
-  - Element value is a primitive type and updated
-  - Element value is primitive list type and updated
-  - Element key is `storage-engine` and its storage-engine type has been changed (storage-engine can be of `device`, `file`, and `memory` type).
-- If element is of map type then patch and base elements will be recursively merged
-- If elements are list of maps then new list elements in the patch list will be appended to the base list and corresponding entries will be merged using the same merge algorithm. Here the order of elements in the base list will be maintained. (corresponding entries are found by matching the special `name` key in maps. Here this list of maps is actually a map of map and main map keys are added in sub-map with key as `name` to convert map of maps to a list of maps).
+## Merge AerospikeConfig
 
-e.g.
+A rack's local aerospikeConfig patch will be merged with the common global base aerospikeConfig based on the following rules:
 
-Rack local aerospikeConfig and common global aerospikeConfig
+* New elements from the patch configMap will be added to the base configMap.
+* A base element will be replaced with a new patch element if:
+    * The element value type is changed.
+    * The element value is a primitive type and updated.
+    * The element value is a primitive list type and updated.
+    * The element key is `storage-engine` and the storage-engine type has been changed (storage-engine can be of `device`, `file`, or `memory` type).
+* If the element is of map type, patch and base elements will be recursively merged.
+* If the elements are list of maps, new list elements in the patch list will be appended to the base list and corresponding entries will be merged using the same merge algorithm.
+    * The order of elements in the base list will be maintained.
+    * Corresponding entries are found by matching the special `name` key in maps.
+    * This list of maps is actually a map of maps.
+    * Main map keys are added in sub-map with key as `name` to convert a map of maps to a list of maps.
+
+As an example, here is the original rack-local aerospikeConfig and common global aerospikeConfig:
 
 ```yaml
   rackConfig:
@@ -208,7 +226,7 @@ Rack local aerospikeConfig and common global aerospikeConfig
             - /dev/nvme0n10 /dev/sdf10
 ```
 
-After merging rack local aerospikeConfig
+After merging the rack-local aerospikeConfig with the common global aerospikeConfig:
 
 ```yaml
   aerospikeConfig:
@@ -234,12 +252,18 @@ After merging rack local aerospikeConfig
           type: memory
 ```
 
-## Removing rack from config
+Save and exit the CR file, then use kubectl to apply the change.
 
-Remove the desired rack section in config yaml file under `rackConfig.racks` section and apply config file using kubectl.
+```shell
+kubectl apply -f aerospike-cluster.yaml
+```
 
-This will try to scale down the desired rack to size 0. One node at a time will be removed from rack. After removing all the nodes from the rack, rack will also be removed. If user is removing rack without decreasing cluster size then other racks will be scaled up based on new node redistribution.
+## Remove a Rack
 
-## Simultaneously add and remove rack
+To remove a rack, delete that rack's section from the `rackConfig.racks` section, then use kubectl to apply the new configuration.
 
-If operator has to scale up some racks and scale down some other racks in single call then operator will always scale up first then it will scale down the racks. Hence, for a short duration actual cluster size may be more than desired cluster size.
+The Aerospike Kubernetes Operator will scale down the desired rack to size 0 by removing one node at a time from the rack. After all the nodes have been removed, the rack will also be removed. If you are removing a rack without decreasing cluster size, other racks will be scaled up based on new node redistribution.
+
+## Simultaneously Add and Remove Racks
+
+If the Operator has to scale up some racks and scale down other racks in single call, the Operator always scales up first and scales down second. As a result, for a short time during the procedure, the actual cluster size may be larger than the desired cluster size.

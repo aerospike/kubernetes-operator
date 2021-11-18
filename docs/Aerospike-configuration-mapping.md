@@ -6,7 +6,7 @@ description: Aerospike Configuration Mapping
 
 ## Mapping Between YAML and Aerospike Configuration
 
-Kubernetes uses YAML configuration files whereas the Aerospike DB uses its own format for configuration. The Aerospike DB configurations are stored in `aerospike.conf`.
+Kubernetes uses YAML configuration files whereas the Aerospike DB uses [its own format for configuration](https://docs.aerospike.com/docs/operations/configure/index.html). The Aerospike DB configurations are stored in `aerospike.conf`.
 
 The Aerospike Kubernetes Operator translates its YAML configurations to the Aerospike server's `aerospike.conf` format.
 

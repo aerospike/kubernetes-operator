@@ -3,44 +3,41 @@ title: Multiple Aerospike Clusters
 description: Multiple Aerospike Clusters
 ---
 
-The operator is able to deploy multiple Aerospike clusters within a single k8s namespace or in multiple k8s namespaces. 
+The Aerospike Kubernetes Operator is able to deploy multiple Aerospike clusters within a single Kubernetes namespace, or in multiple namespaces.
 
-## Multiple Aerospike clusters in a single k8s namespace
+## Multiple Aerospike Clusters in a Single Namespace
 
-Deploying multiple clusters in a single namespace is as easy as deploying a single cluster. The user has to just deploy another cluster with a cluster name (cluster object metadata name in cr.yaml file) that is not already registered in that namespace.
+Deploying multiple clusters in a single namespace is the same process as deploying a single cluster. Deploy another cluster with a cluster name (as described by the cluster object metadata name in the CR YAML file) which is not already registered in that namespace.
 
-## RBAC for other namespaces
-For deploying and managing Aerospike cluster's in the operator's namespace (recommended as aerospike) you need not do any additional RBAC configuration.
+## RBAC for Other Namespaces
 
-For deploying cluster in namespaces other than the operator's namespace you need to
-- create a service account with name `aerospike-operator-controller-manager` in that namespace
-- add this service account to the operator's `ClusterRoleBinding`
+If you are deploying and managing Aerospike clusters in the Operator's namespace, no additional RBAC configuration is necessary.
 
-#### Create the operator service account for the namespace
+For clusters in namespaces other than the Operator's namespace, you need to create a service account with the name `aerospike-operator-controller-manager` in that namespace.
+
+For example, the kubectl command to create this service account in the namespace ns1 is:
 
 ```shell
-# Replace ns1 with your target namespace
 kubectl -n ns1 create  serviceaccount aerospike-operator-controller-manager
 ```
 
-#### Add service account to operator's ClusterRoleBinding
-Find the ClusterRoleBinding created for the operator and add the service account created above
+Next, add this service account to the Operator's `ClusterRoleBinding`. To do this, use kubectl to find the cluster role binding:
 
 ```shell
 kubectl get clusterrolebindings.rbac.authorization.k8s.io  | grep aerospike-kubernetes-operator
 aerospike-kubernetes-operator.v2.0.0-rc1-74b946466d                 ClusterRole/aerospike-kubernetes-operator.v2.0.0-rc1-74b946466d   41m
 ```
 
-In the example above the name of the cluster role binding is `aerospike-kubernetes-operator.v2.0.0-rc1-74b946466d`
+In this example, the name of the cluster role binding is `aerospike-kubernetes-operator.v2.0.0-rc1-74b946466d`
 
-Edit the role binding and add a new subject entry for the service account
+Use kubectl to edit the role binding and add a new subject entry for the service account:
 
 ```shell
 # Replace aerospike-kubernetes-operator.v2.0.0-rc1-74b946466d with the name of the cluster role binding found above
 kubectl edit clusterrolebindings.rbac.authorization.k8s.io  aerospike-kubernetes-operator.v2.0.0-rc1-74b946466d
 ```
 
-In the editor that is launched append the following lines to the subjects section as shown below
+This command launches an editor. Append the following lines to the `subjects` section:
 
 ```yaml
   # A new entry for ns1.
@@ -52,7 +49,7 @@ In the editor that is launched append the following lines to the subjects sectio
 
 Save and ensure that the changes are applied.
 
-Here is a full example of the operator's ClusterRoleBinding targeting `aerospike` and `ns1` namespaces.
+Here is a full example of the operator's ClusterRoleBinding targeting the `aerospike` and `ns1` namespaces.
 
 ```yaml
 apiVersion: rbac.authorization.k8s.io/v1

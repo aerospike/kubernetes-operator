@@ -3,12 +3,11 @@ title: Monitoring
 description: Monitoring
 ---
 
-[Aerospike Monitoring Stack](https://docs.aerospike.com/docs/tools/monitorstack/index.md) can be used to enable monitoring and alerting for Aerospike clusters deployed by the Aerospike Kubernetes Operator.
+The Aerospike Monitoring Stack is a useful way to enable monitoring and alerts for Aerospike clusters deployed by the Aerospike Kubernetes Operator.
 
 ## Add Aerospike Prometheus Exporter Sidecar
 
-Add the exporter as a sidecar to each Aerospike server pod using the [PodSpec configuration](Cluster-configuration-settings.md#pod-spec). For example,
-
+Add the exporter as a sidecar to each Aerospike server pod using the [PodSpec configuration](Cluster-configuration-settings.md#pod-spec).
 
 ```yaml
 spec:
@@ -18,28 +17,26 @@ spec:
 
   podSpec:
     sidecars:
-      - name: aerospike-prometheus-exporter
-        image: "aerospike/aerospike-prometheus-exporter:1.3.0"
-        ports:
-          - containerPort: 9145
-            name: aerospike-prometheus-exporter
+     - name: aerospike-prometheus-exporter
+       image: aerospike/aerospike-prometheus-exporter:1.3.0
+       ports:
+         - containerPort: 9145
+           name: aerospike-prometheus-exporter
 
  .
  .
  .
 ```
 
-## Deploy or Update Aerospike Cluster (Custom Resource)
-
-[Create or update](Create-Aerospike-cluster.md) your clusters once the Prometheus exporter sidecar is added.
+Create or update your clusters after the Prometheus exporter sidecar is added.
 
 ## Prometheus Configuration
 
 Configure Prometheus to add exporter endpoints as scrape targets.
 
-If Prometheus is also running on Kubernetes, it can be configured to extract exporter targets from Kubernetes API.
+If Prometheus is also running on Kubernetes, it can be configured to extract exporter targets from the Kubernetes API.
 
-In the following example, Prometheus will be able to discover and add exporter targets in `default` namespace which has endpoint port name as `aerospike-prometheus-exporter`.
+In the following example, Prometheus will be able to discover and add exporter targets in the `default` namespace which has endpoint port name of `aerospike-prometheus-exporter`.
 
 ```yaml
 scrape_configs:
@@ -58,52 +55,56 @@ scrape_configs:
       action: keep
 ```
 
-See [Aerospike Monitoring Stack](https://docs.aerospike.com/docstools/monitorstack/index.md) for its installation, configuration and setup guide.
+See the Aerospike Database documentation for more information on installing and configuring the Aerospike Monitoring Stack.
 
-## Quick Example
+## Dashboards
 
-This example demonstrates monitoring of Aerospike clusters deployed by Kubernetes Operator using Aerospike Monitoring Stack.
+To view the metrics, we recommend you import our pre-made Grafana dashboards from the [Aerospike Monitoring GitHub Repo](https://github.com/aerospike/aerospike-monitoring/tree/master/config/grafana/dashboards).
 
-1. Add Aerospike helm repository
-    ```sh
-    helm repo add aerospike https://aerospike.github.io/aerospike-kubernetes-enterprise
-    ```
+## Example
 
-2. Deploy Aerospike Kubernetes Operator using helm chart
-    ```sh
-    helm install operator aerospike/aerospike-kubernetes-operator --set replicas=1
-    ```
+This example demonstrates how to use the Aerospike Monitoring Stack to monitor Aerospike clusters deployed by the Aerospike Kubernetes Operator.
 
-3. Create a Kubernetes secret to store Aerospike license feature key file
-    ```sh
-    kubectl create secret generic aerospike-license --from-file=<path-to-features.conf-file>
-    ```
+Deploy the Aerospike Kubernetes Operator using OLM [as described in the Getting Started section](Create-Aerospike-cluster.md).
 
-4. Deploy Aerospike cluster with Aerospike Prometheus Exporter sidecar
-    ```sh
-    cat << EOF | helm install aerospike aerospike/aerospike-cluster \
-    --set devMode=true \
-    --set aerospikeSecretName=aerospike-license \
-    -f -
-    podSpec:
-      sidecars:
-      - name: aerospike-prometheus-exporter
-        image: "aerospike/aerospike-prometheus-exporter:1.3.0"
-        ports:
-        - containerPort: 9145
-          name: exporter
-    EOF
-    ```
+Create a Kubernetes Secret `aerospike-license` to store the Aerospike license feature key file.
 
-5. Deploy Prometheus-Grafana Stack using [aerospike-monitoring-stack.yaml](https://docs.aerospike.com/docscloud/assets/aerospike-monitoring-stack.yaml)
-    ```sh
-    kubectl apply -f ./aerospike-monitoring-stack.yaml
-    ```
+```shell
+kubectl create secret generic aerospike-license --from-file=[path to the features.conf-file]
+```
 
-6. Connect to Grafana dashboard,
-    ```sh
-    kubectl port-forward service/aerospike-monitoring-stack-grafana 3000:80
-    ```
-    Open `localhost:3000` in browser, and login to Grafana as `admin`/`admin`.
+To deploy an Aerospike cluster with an Aerospike Prometheus Exporter sidecar, add the following to the podSpec section of the cluster's CR file:
 
-7. Import dashboards from [Aerospike Monitoring GitHub Repo](https://github.com/aerospike/aerospike-monitoring/tree/master/config/grafana/dashboards) and visualise metrics.
+```yaml
+podSpec:
+  multiPodPerHost: true
+  sidecars:
+   - name: aerospike-prometheus-exporter
+     image: aerospike/aerospike-prometheus-exporter:1.3.0
+     ports:
+       - containerPort: 9145
+         name: aerospike-prometheus-exporter
+
+```
+
+Use kubectl to apply the change.
+
+```shell
+kubectl apply -f aerospike-cluster.yaml
+```
+
+Deploy Prometheus-Grafana Stack using [aerospike-monitoring-stack.yaml](https://docs.aerospike.com/docs/cloud/assets/aerospike-monitoring-stack.yaml).
+
+```shell
+kubectl apply -f aerospike-monitoring-stack.yaml
+```
+
+Connect to the Grafana dashboard.
+
+```shell
+kubectl port-forward service/aerospike-monitoring-stack-grafana 3000:80
+```
+
+Open a browser window and go to `localhost:3000`. Log into Grafana with username `admin` and password `admin`.
+
+To view the metrics, we recommend you import dashboards from the [Aerospike Monitoring GitHub Repo](https://github.com/aerospike/aerospike-monitoring/tree/master/config/grafana/dashboards).

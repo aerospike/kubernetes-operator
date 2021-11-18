@@ -34,7 +34,7 @@ memory-size 4G
 
 ### Storage Sizes
 
-Memory, file, and device sizes in the YAML format are integers and need to be specified as number of bytes. In `aerospike.conf` one may optionally provide a unit as a string.
+Memory, file, and device sizes in the YAML format are integers and need to be specified as number of bytes. In `aerospike.conf` you may optionally provide a unit as a string.
 
 YAML
 

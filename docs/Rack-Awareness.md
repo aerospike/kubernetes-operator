@@ -113,7 +113,7 @@ Save and exit the CR file, then use kubectl to apply the change.
 kubectl apply -f aerospike-cluster.yaml
 ```
 
-The Aerospike Kubernetes Operator redistributes cluster nodes across racks whenever the cluster size or the number of racks changes. If you add a rack without increasing the cluster size, the nodes will be redistributed. The number of nodes on existing racks will be scaled down, and the number of nodes on the new rack will be scaled up, per the usual topology rules.
+The Aerospike Kubernetes Operator redistributes cluster nodes across racks whenever the cluster size or the number of racks changes. If you add a rack without increasing the cluster size, the nodes are redistributed. The number of nodes on existing racks is scaled down, and the number of nodes on the new rack is scaled up, per the usual topology rules.
 
 ## Set Rack-Level Storage and aerospikeConfig
 

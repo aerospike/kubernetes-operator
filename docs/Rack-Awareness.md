@@ -173,7 +173,7 @@ kubectl apply -f aerospike-cluster.yaml
 A rack's local aerospikeConfig patch will be merged with the common global base aerospikeConfig based on the following rules:
 
 * New elements from the patch configMap are added to the base configMap.
-* A base element will be replaced with a new patch element if:
+* A base element is replaced with a new patch element if:
     * The element value type is changed.
     * The element value is a primitive type and updated.
     * The element value is a primitive list type and updated.

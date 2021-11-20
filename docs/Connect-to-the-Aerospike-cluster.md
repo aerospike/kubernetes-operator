@@ -111,7 +111,7 @@ Status:
 
 When connecting from outside the Kubernetes cluster network, you need to use the host external IPs. By default, the Operator configures access endpoints to use Kubernetes host internal IPs and alternate access endpoints to use host external IPs.
 
-Please refer to [network policy](Cluster-configuration-settings.md#network-policy) configuration for details.
+Refer to [network policy](Cluster-configuration-settings.md#network-policy) configuration for details.
 
 From the example status output, for pod aerocluster-0-0, the alternate access endpoint is 34.70.193.192:31312
 

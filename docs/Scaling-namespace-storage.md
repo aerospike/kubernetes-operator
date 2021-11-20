@@ -148,7 +148,7 @@ Save and exit the CR file, then use kubectl to apply the change.
 kubectl apply -f aerospike-cluster.yaml
 ```
 
-This creates a new rack with `id: 2` and updated `storage` config. The old data will be migrated to new rack. The old rack will be removed gracefully.
+This creates a new rack with `id: 2` and updated `storage` config. The old data is migrated to new rack. The old rack is removed gracefully.
 
 Check the pods.
 

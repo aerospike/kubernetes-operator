@@ -170,7 +170,7 @@ kubectl apply -f aerospike-cluster.yaml
 
 ## Merge AerospikeConfig
 
-A rack's local aerospikeConfig patch will be merged with the common global base aerospikeConfig based on the following rules:
+A rack's local aerospikeConfig patch is merged with the common global base aerospikeConfig based on the following rules:
 
 * New elements from the patch configMap are added to the base configMap.
 * A base element is replaced with a new patch element if:
@@ -264,7 +264,7 @@ kubectl apply -f aerospike-cluster.yaml
 
 To remove a rack, delete that rack's section from the `rackConfig.racks` section, then use kubectl to apply the new configuration.
 
-The Aerospike Kubernetes Operator will scale down the desired rack to size 0 by removing one node at a time from the rack. After all the nodes have been removed, the rack will also be removed. If you are removing a rack without decreasing cluster size, other racks will be scaled up based on new node redistribution.
+The Aerospike Kubernetes Operator scales down the desired rack to size 0 by removing one node at a time from the rack. After all the nodes have been removed, the rack is removed. If you are removing a rack without decreasing cluster size, other racks are scaled up based on new node redistribution.
 
 ## Simultaneously Add and Remove Racks
 

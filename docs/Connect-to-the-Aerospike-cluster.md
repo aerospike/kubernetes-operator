@@ -117,7 +117,7 @@ From the example status output, for pod aerocluster-0-0, the alternate access en
 
 ### With a Client
 
-To use a client from outside the Kubernetes network using external IPs set the following for the client policy using appropriate client API.
+To use a client from outside the Kubernetes network using external IPs, set the following for the client policy using appropriate client API.
 
 ```yaml
 host: 34.70.193.192

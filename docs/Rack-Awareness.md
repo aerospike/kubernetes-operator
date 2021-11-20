@@ -7,7 +7,7 @@ In many situations, it's considered a "best practice" to build clusters which sp
 
 For example, if you set a replication factor of 2, the master copy of the partition and its replica are stored on separate hardware failure groups.
 
-Rack Awareness also provides a mechanism which lets database clients read on a preferential basis from servers in their nearest rack or zone. This can provide lower latency, increase stability, and significantly reduce traffic charges by limiting cross-availability-zone traffic.
+Rack Awareness also provides a mechanism which lets database clients read from servers in their nearest rack or zone on a preferential basis. This can provide lower latency, increase stability, and significantly reduce traffic charges by limiting cross-availability-zone traffic.
 
 For more information, [see the documentation on Aerospike Rack Awareness](https://docs.aerospike.com/docs/architecture/rack-aware.html).
 

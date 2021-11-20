@@ -74,7 +74,7 @@ spec:
 
 ## Create a New Rack
 
-In order to resize `/dev/sdf` for namespace `test`  we have to create a new `rack` inside `rackConfig` with updated `storage` config and remove the old rack.
+To resize `/dev/sdf` for namespace `test`,  create a new `rack` inside `rackConfig` with updated `storage` config, and remove the old rack.
 
 The new rack can be created in the same physical rack using existing `zone/region` (if there is enough space) to hold new storage and old storage together.
 

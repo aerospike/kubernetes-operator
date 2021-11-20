@@ -34,7 +34,7 @@ Create or update your clusters after you add the Prometheus exporter sidecar.
 
 Configure Prometheus to add exporter endpoints as scrape targets.
 
-If Prometheus is also running on Kubernetes, it can be configured to extract exporter targets from the Kubernetes API.
+If Prometheus is also running on Kubernetes, you can configure it to extract exporter targets from the Kubernetes API.
 
 In the following example, Prometheus will be able to discover and add exporter targets in the `default` namespace which has endpoint port name of `aerospike-prometheus-exporter`.
 

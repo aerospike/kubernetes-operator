@@ -82,7 +82,7 @@ This and other example CRs are stored in [the main Aerospike Kubernetes Operator
 
 ## Cluster Node Distribution
 
-Cluster nodes are distributed across racks as evenly as possible. The cluster size is divided by the number of racks to get nodes per rack. Any remainder nodes are distributed one-by-one across racks starting from the first rack.
+Cluster nodes are distributed across racks as evenly as possible. The cluster size is divided by the number of racks to determine how many nodes per rack. Any remainder nodes are distributed one-by-one across racks starting from the first rack.
 
 For example, in a setup with 10 nodes spread across 4 racks, the topology is:
 

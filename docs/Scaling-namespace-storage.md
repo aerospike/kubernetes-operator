@@ -76,7 +76,7 @@ spec:
 
 To resize `/dev/sdf` for namespace `test`,  create a new `rack` inside `rackConfig` with updated `storage` config, and remove the old rack.
 
-The new rack can be created in the same physical rack using existing `zone/region` (if there is enough space) to hold new storage and old storage together.
+You can create the new rack in the same physical rack if there is enough space. Use the existing `zone/region` to hold the new storage and old storage together.
 
 ```yaml
 apiVersion: asdb.aerospike.com/v1beta1

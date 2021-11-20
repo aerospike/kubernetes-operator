@@ -398,7 +398,7 @@ The YAML form of Aerospike server configuration. See [Aerospike Configuration](A
 
 ## Rack Config
 
-Configures the operator to deploy a rack-aware Aerospike cluster. Pods will be deployed in given racks based on the given configuration.
+Configures the operator to deploy a rack-aware Aerospike cluster. Pods are deployed in given racks based on the given configuration.
 
 | Field                                                       | Required | Type               | Default | Description                                                          |
 | ----------------------------------------------------------- | -------- | ------------------ | ------- | -------------------------------------------------------------------- |

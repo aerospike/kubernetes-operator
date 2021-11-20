@@ -233,7 +233,7 @@ For filesystem volumes, initMethod can be `none` or `deleteFiles`.
 For block volumes, initMethod can be `none`, `dd` or `blkdiscard`.
 
 :::note
-`blkdiscard` will only work for devices that support [TRIM](https://en.wikipedia.org/wiki/Trim_%28computing%29). For AWS please refer to the [storage volumes guide](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html#instance-store-volumes) to check TRIM support. If TRIM is not supported please use the slower `dd` if your devices need initialization. For other devices please verify the support for TRIM command.
+`blkdiscard` only works for devices that support [TRIM](https://en.wikipedia.org/wiki/Trim_%28computing%29). For AWS please refer to the [storage volumes guide](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html#instance-store-volumes) to check TRIM support. If TRIM is not supported please use the slower `dd` to initialize your devices. For other devices please verify the support for TRIM command.
 :::
 
 #### Aerospike Server Volume Attachment

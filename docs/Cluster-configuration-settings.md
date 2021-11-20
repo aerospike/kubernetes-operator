@@ -3,7 +3,7 @@ title: Cluster Configuration Settings
 description: Cluster Configuration Settings
 ---
 
-Aerospike cluster configuration settings are found in the Aerospike cluster Custom Resource (CR). You can edit this file to make changes to your Aerospike cluster.
+Aerospike cluster configuration settings are in the Aerospike cluster Custom Resource (CR). You can edit this file to make changes to your Aerospike cluster.
 
 The [Operator Custom Resource Definition (CRD)](https://github.com/aerospike/aerospike-kubernetes-operator/blob/master/config/crd/bases/asdb.aerospike.com_aerospikeclusters.yaml) specifies the CR the Operator uses to manage the cluster.
 

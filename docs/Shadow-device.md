@@ -7,6 +7,8 @@ In cloud environments, the namespace storage engine can be configured to use ext
 
 To set this up, first follow the instructions in our [storage provisioning guide](Storage-provisioning.md) to create a local volume provisioner and appropriate storage class.
 
+For more information on using a shadow device and other storage configurations, [see the Aerospike documentation for namespace storage configuration](https://docs.aerospike.com/docs/operations/configure/namespace/storage/index.html).
+
 Next, add the following storage-specific configuration to the Aerospike cluster's CR file.
 
 ```yaml

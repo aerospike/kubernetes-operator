@@ -28,7 +28,7 @@ spec:
  .
 ```
 
-Create or update your clusters after the Prometheus exporter sidecar is added.
+Create or update your clusters after you add the Prometheus exporter sidecar.
 
 ## Prometheus Configuration
 

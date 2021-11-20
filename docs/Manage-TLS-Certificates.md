@@ -8,6 +8,9 @@ To set up a TLS-enabled Aerospike cluster, first use kubectl to create a Kuberne
 ```shell
 kubectl create secret generic aerospike-secret --from-file=config/samples/secrets -n aerospike
 ```
+
+See the Aerospike documentation for [more details on Aerospike TLS configuration](https://docs.aerospike.com/docs/operations/configure/network/tls/index.html).
+
 Next, add the TLS-specific configuration to the Aerospike cluster's CR file.
 
 ```yaml

@@ -3,7 +3,7 @@ title: Monitoring
 description: Monitoring
 ---
 
-The Aerospike Monitoring Stack is a useful way to enable monitoring and alerts for Aerospike clusters deployed by the Aerospike Kubernetes Operator.
+The [Aerospike Monitoring Stack](https://docs.aerospike.com/docs/tools/monitorstack/index.html) is a useful way to enable monitoring and alerts for Aerospike clusters deployed by the Aerospike Kubernetes Operator.
 
 ## Add Aerospike Prometheus Exporter Sidecar
 

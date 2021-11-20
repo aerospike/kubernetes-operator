@@ -5,7 +5,7 @@ description: Data On SSD
 
 The following storage configuration sets up the Aerospike cluster to store namespace data on a provisioned SSD storage device.
 
-For more details, visit [configuration of SSD Storage Engine](https://docs.aerospike.com/docs/configure/namespace/storage/#recipe-for-an-ssd-storage-engine).
+For more information on storing namespace data on SSD and other storage configurations, [see the Aerospike documentation for namespace storage configuration](https://docs.aerospike.com/docs/operations/configure/namespace/storage/index.html).
 
 To set this up, add the following storage-specific configuration to the Aerospike cluster's CR file.
 

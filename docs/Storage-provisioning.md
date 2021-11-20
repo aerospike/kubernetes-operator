@@ -53,7 +53,7 @@ You can also use your own discovery directory, but make sure that the provisione
 
 To automate the local volume provisioning, we will create and run a provisioner based on [kubernetes-sigs/sig-storage-local-static-provisioner](https://github.com/kubernetes-sigs/sig-storage-local-static-provisioner).
 
-The provisioner will run as a DaemonSet which will manage the local SSDs on each node based on a discovery directory, create/delete the PersistentVolumes, and clean up the storage when it is released.
+The provisioner runs as a DaemonSet which manages the local SSDs on each node based on a discovery directory, creates and deletes the PersistentVolumes, and cleans up the storage when it is released.
 
 The local volume static provisioner for this example is defined in [aerospike_local_volume_provisioner.yaml](https://github.com/aerospike/aerospike-kubernetes-operator/tree/2.0.0-rc1/config/samples/storage/aerospike_local_volume_provisioner.yaml).
 

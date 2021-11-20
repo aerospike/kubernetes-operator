@@ -3,7 +3,7 @@ title: Data In Memory
 description: Data In Memory
 ---
 
-A data in memory (DIM) configuration is useful in many situations. This is also an easy way to test an Aerospike cluster without having to configure separate storage.
+A data in memory (DIM) configuration is useful in many situations. This is also an easy way to test an Aerospike cluster without having to configure separate storage. For more information on data-in-memory and other storage configurations, [see the Aerospike documentation for namespace storage configuration](https://docs.aerospike.com/docs/operations/configure/namespace/storage/index.html).
 
 To set this up, add the following storage-specific configuration to the Aerospike cluster's CR file.
 

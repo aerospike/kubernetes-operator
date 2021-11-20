@@ -9,6 +9,8 @@ For example, if you set a replication factor of 2, the master copy of the partit
 
 Rack Awareness also provides a mechanism which lets database clients read on a preferential basis from servers in their nearest rack or zone. This can provide lower latency, increase stability, and significantly reduce traffic charges by limiting cross-availability-zone traffic.
 
+For more information, [see the documentation on Aerospike Rack Awareness](https://docs.aerospike.com/docs/architecture/rack-aware.html).
+
 ## Add Rack Awareness
 
 This example adds Rack Awareness to an existing Aerospike cluster CR file.

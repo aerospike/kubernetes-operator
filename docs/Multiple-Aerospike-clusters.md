@@ -3,17 +3,17 @@ title: Multiple Aerospike Clusters
 description: Multiple Aerospike Clusters
 ---
 
-The Aerospike Kubernetes Operator is able to deploy multiple Aerospike clusters within a single Kubernetes namespace, or in multiple namespaces.
+The Aerospike Kubernetes Operator can deploy multiple Aerospike clusters within a single Kubernetes namespace, or in multiple namespaces.
 
 ## Multiple Aerospike Clusters in a Single Namespace
 
-Deploying multiple clusters in a single namespace is the same process as deploying a single cluster. Deploy another cluster with a cluster name (as described by the cluster object metadata name in the CR YAML file) which is not already registered in that namespace.
+You can deploy multiple clusters in a single namespace using the same process as deploying a single cluster. When you deploy another cluster, use a cluster name which is not already registered in that namespace as described by the cluster object metadata name in the CR YAML file.
 
 ## RBAC for Other Namespaces
 
-If you are deploying and managing Aerospike clusters in the Operator's namespace, no additional RBAC configuration is necessary.
+If you deploy and manage Aerospike clusters in the Operator's namespace, no additional RBAC configuration is necessary.
 
-For clusters in namespaces other than the Operator's namespace, you need to create a service account with the name `aerospike-operator-controller-manager` in that namespace.
+For clusters in namespaces other than the Operator's namespace, create a service account with the name `aerospike-operator-controller-manager` in that namespace.
 
 For example, the kubectl command to create this service account in the namespace ns1 is:
 

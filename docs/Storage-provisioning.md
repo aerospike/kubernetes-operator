@@ -67,7 +67,7 @@ kubectl create -f local_storage_class.yaml
 kubectl create -f aerospike_local_volume_provisioner.yaml
 ```
 
-Verify the persistent volumes have been created.
+Verify the persistent volumes were created.
 
 ```shell
 $ kubectl get pv

@@ -46,7 +46,7 @@ sudo ln -s /dev/nvme0n2 /mnt/disks/
 ```
 
 :::note
-You can use also your own discovery directory, but make sure that the provisioner is also configured to point to the same directory.
+You can also use your own discovery directory, but make sure that the provisioner is configured to point to the same directory.
 :::
 
 ### Deploy the Local Volume Provisioner

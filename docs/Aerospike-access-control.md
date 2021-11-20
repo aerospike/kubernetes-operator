@@ -294,7 +294,7 @@ kubectl apply -f aerospike-cluster.yaml
 
 ## Remove a Role
 
-Remove the desired role from `roles` list under `aerospikeAccessControl`. Also remove this role from the `roles` list of all the users.
+Remove the desired role from the `roles` list under `aerospikeAccessControl`. Also remove this role from the `roles` list of all the users.
 
 Remove the `profiler` role.
 

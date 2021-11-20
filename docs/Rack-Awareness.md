@@ -178,9 +178,9 @@ A rack's local aerospikeConfig patch will be merged with the common global base 
     * The element value is a primitive type and updated.
     * The element value is a primitive list type and updated.
     * The element key is `storage-engine` and the storage-engine type has been changed (storage-engine can be of `device`, `file`, or `memory` type).
-* If the element is of map type, patch and base elements will be recursively merged.
-* If the elements are list of maps, new list elements in the patch list will be appended to the base list and corresponding entries will be merged using the same merge algorithm.
-    * The order of elements in the base list will be maintained.
+* If the element is of map type, patch and base elements is recursively merged.
+* If the elements are list of maps, new list elements in the patch list is appended to the base list and corresponding entries are merged using the same merge algorithm.
+    * The order of elements in the base list is maintained.
     * Corresponding entries are found by matching the special `name` key in maps.
     * This list of maps is actually a map of maps.
     * Main map keys are added in sub-map with key as `name` to convert a map of maps to a list of maps.

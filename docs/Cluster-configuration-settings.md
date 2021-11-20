@@ -306,7 +306,7 @@ A Kubernetes Secret can be mounted as a volume. You can use a Secret for mountin
 
 #### ConfigMap
 
-A Kubernetes ConfigMap can be mounted as  a volume. ConfigMaps hold non-confidential data like configuration for applications running in your custom init containers or sidecars.
+A Kubernetes ConfigMap can be mounted as a volume. ConfigMaps hold non-confidential data like configuration for applications running in your custom init containers or sidecars.
 
 ```yaml
 - name: app-config

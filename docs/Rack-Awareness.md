@@ -119,7 +119,7 @@ The Aerospike Kubernetes Operator redistributes cluster nodes across racks whene
 
 Aerospike's Rack Awareness lets you set local storage and aerospikeConfig options. If you provide local storage for a rack, the rack will use this storage. Otherwise, common global storage will be used.
 
-In the following example, the aerospikeConfig is a patch which will be used for the rack and merged with the common global aerospikeConfig.
+In the following example, the aerospikeConfig is a patch which is used for the rack, and merged with the common global aerospikeConfig.
 
 ```yaml
   rackConfig:

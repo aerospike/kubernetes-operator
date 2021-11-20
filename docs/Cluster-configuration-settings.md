@@ -189,7 +189,7 @@ Configures the `aerospike-server` container created by operator.
 
 The storage section configures persistent volume devices to provision and attach to the containers.
 
-This section is required by default for persisting the Aerospike work directory. The work directory should be stored on persistent storage to ensure pod restarts do not reset Aerospike server metadata files.
+This section is required by default for persisting the Aerospike work directory. Store the work directory on persistent storage to ensure pod restarts do not reset Aerospike server metadata files.
 
 This section is also required if Aerospike namespaces require persistent storage.
 

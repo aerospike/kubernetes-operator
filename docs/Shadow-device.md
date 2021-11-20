@@ -5,7 +5,7 @@ description: Shadow Device
 
 In cloud environments, the namespace storage engine can be configured to use extremely high-performance cloud instance-attached local SSDs. Under this setup, writes will be duplicated to another network-attached shadow device for persistence in case the cloud instance terminates.
 
-To set this up, first follow the instructions in our [storage provisioning guide](Storage-provisioning.md) to create a local volume provisioner and appropriate storage class.
+To set this up, follow the instructions in our [storage provisioning guide](Storage-provisioning.md) to create a local volume provisioner and appropriate storage class.
 
 For more information on using a shadow device and other storage configurations, [see the Aerospike documentation for namespace storage configuration](https://docs.aerospike.com/docs/operations/configure/namespace/storage/index.html).
 

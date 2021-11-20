@@ -3,7 +3,7 @@ title: HDD Storage With Data In Index
 description: HDD Storage With Data In Index
 ---
 
-This example sets up a specialized namespace where records have a single-bin and fit in 8 bytes.
+This example sets up a specialized namespace where records have a single-bin and fit in 8 bytes. For more information on setting up HDD storage with data-in-index and other storage configurations, [see the Aerospike documentation for namespace storage configuration](https://docs.aerospike.com/docs/operations/configure/namespace/storage/index.html).
 
 To set this up, add the following storage-specific configuration to the Aerospike cluster's CR file.
 

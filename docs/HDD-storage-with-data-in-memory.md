@@ -3,7 +3,7 @@ title: HDD Storage With Data In Memory
 description: HDD Storage With Data In Memory
 ---
 
-This example lets you store namespace data both in memory and on the persistent device as well.  For more information on setting up HDD storage with data-in-memory and other storage configurations, [see the Aerospike documentation for namespace storage configuration](https://docs.aerospike.com/docs/operations/configure/namespace/storage/index.html).
+This example lets you store namespace data both in memory and on the persistent device. For more information on setting up HDD storage with data-in-memory and other storage configurations, [see the Aerospike documentation for namespace storage configuration](https://docs.aerospike.com/docs/operations/configure/namespace/storage/index.html).
 
 To set this up, add the following storage-specific configuration to the Aerospike cluster's CR file.
 

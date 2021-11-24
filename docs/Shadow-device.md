@@ -3,7 +3,7 @@ title: Shadow Device
 description: Shadow Device
 ---
 
-In cloud environments, the namespace storage engine can be configured to use extremely high-performance cloud instance-attached local SSDs. Under this setup, writes will be duplicated to another network-attached shadow device for persistence in case the cloud instance terminates.
+In cloud environments, the namespace storage engine can be configured to use extremely high-performance cloud instance-attached local SSDs. Under this setup, writes are duplicated to another network-attached shadow device for persistence in case the cloud instance terminates.
 
 To set this up, follow the instructions in our [storage provisioning guide](Storage-provisioning.md) to create a local volume provisioner and appropriate storage class.
 

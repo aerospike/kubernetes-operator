@@ -55,7 +55,7 @@ scrape_configs:
       action: keep
 ```
 
-See [Aerospike Monitoring Stack documentation] (https://docs.aerospike.com/docs/tools/monitorstack/index.html) for more information on installing and configuring the Aerospike Monitoring Stack.
+See [Aerospike Monitoring Stack documentation](https://docs.aerospike.com/docs/tools/monitorstack/index.html) for more information on installing and configuring the Aerospike Monitoring Stack.
 
 ## Dashboards
 

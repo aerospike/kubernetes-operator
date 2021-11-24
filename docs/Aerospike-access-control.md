@@ -3,7 +3,7 @@ title: Aerospike Access Control
 description: Aerospike Access Control
 ---
 
-Aerospike Access Control includes user, role, and privilege creation and maintenance.
+Aerospike Access Control includes user, role, and privilege creation and maintenance. [See the documentation for more information on Aerospike Access Control](https://docs.aerospike.com/docs/guide/security/access-control.html).
 
 To manage your access controls from the operator, configure the `aerospikeAccessControl` section in the Aerospike cluster's Custom Resource (CR) file.
 
@@ -294,7 +294,7 @@ kubectl apply -f aerospike-cluster.yaml
 
 ## Remove a Role
 
-Remove the desired role from `roles` list under `aerospikeAccessControl`. Also remove this role from the `roles` list of all the users.
+Remove the desired role from the `roles` list under `aerospikeAccessControl`. Also remove this role from the `roles` list of all the users.
 
 Remove the `profiler` role.
 

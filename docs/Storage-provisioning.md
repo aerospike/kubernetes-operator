@@ -55,7 +55,7 @@ To automate the local volume provisioning, we will create and run a provisioner 
 
 The provisioner runs as a DaemonSet which manages the local SSDs on each node based on a discovery directory, creates and deletes the PersistentVolumes, and cleans up the storage when it is released.
 
-The local volume static provisioner for this example is defined in [aerospike_local_volume_provisioner.yaml](https://github.com/aerospike/aerospike-kubernetes-operator/tree/2.0.0-rc1/config/samples/storage/aerospike_local_volume_provisioner.yaml).
+The local volume static provisioner for this example is defined in [aerospike_local_volume_provisioner.yaml](https://github.com/aerospike/aerospike-kubernetes-operator/tree/2.0.0-rc2/config/samples/storage/aerospike_local_volume_provisioner.yaml).
 
 The storage class is defined in [local_storage_class.yaml](https://github.com/aerospike/aerospike-kubernetes-operator/blob/master/config/samples/storage/local_storage_class.yaml). This and other example CRs are stored in [the main Aerospike Kubernetes Operator repository](https://github.com/aerospike/aerospike-kubernetes-operator/tree/master/config/samples).
 

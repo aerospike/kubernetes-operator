@@ -105,7 +105,7 @@ module.exports = {
           editUrl: 'https://github.com/aerospike/kubernetes-operator/edit/main/',
           versions: {
             current: {
-              label: "2.0.0-rc1 🚧"
+              label: "2.0.0-rc2 🚧"
             }
           }
         },

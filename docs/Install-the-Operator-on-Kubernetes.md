@@ -47,7 +47,7 @@ You will always install the Operator on a single namespace. However, the Operato
 To install the Operator on the `aerospike` namespace, and only use it to manage the `aerospike` namespace, run the Operator bundle with the command:
 
 ```shell
-operator-sdk run bundle docker.io/aerospike/aerospike-kubernetes-operator-bundle:2.0.0-rc1 --namespace=aerospike
+operator-sdk run bundle docker.io/aerospike/aerospike-kubernetes-operator-bundle:2.0.0-rc2 --namespace=aerospike
 ```
 
 ### Manage Multiple Specific Namespaces
@@ -57,7 +57,7 @@ Use `--install-mode MultiNamespace=[namespace 1],[namespace 1],[etc]` to manage 
 For example, to install the Operator on the `aerospike` namespace and use it to manage Aerospike clusters on the `ns1` and `ns2` namespaces, the command is:
 
 ```shell
-operator-sdk run bundle docker.io/aerospike/aerospike-kubernetes-operator-bundle:2.0.0-rc1 --namespace=aerospike --install-mode MultiNamespace=ns1,ns2
+operator-sdk run bundle docker.io/aerospike/aerospike-kubernetes-operator-bundle:2.0.0-rc2 --namespace=aerospike --install-mode MultiNamespace=ns1,ns2
 ```
 
 ### Manage All Namespaces
@@ -65,7 +65,7 @@ operator-sdk run bundle docker.io/aerospike/aerospike-kubernetes-operator-bundle
 Use `--install-mode AllNamespaces` to manage Aerospike clusters on all available namespaces:
 
 ```shell
-operator-sdk run bundle docker.io/aerospike/aerospike-kubernetes-operator-bundle:2.0.0-rc1 --namespace=aerospike --install-mode AllNamespaces
+operator-sdk run bundle docker.io/aerospike/aerospike-kubernetes-operator-bundle:2.0.0-rc2 --namespace=aerospike --install-mode AllNamespaces
 ```
 
 ## RBAC
@@ -80,7 +80,7 @@ Use `kubectl get csv -n aerospike` to verify the Operator's CSV is in the `Succe
 $ kubectl get csv -n aerospike
 
 NAME                                       DISPLAY                         VERSION     REPLACES   PHASE
-aerospike-kubernetes-operator.v2.0.0-rc1   Aerospike Kubernetes operator   2.0.0-rc1              Succeeded
+aerospike-kubernetes-operator.v2.0.0-rc2   Aerospike Kubernetes operator   2.0.0-rc2              Succeeded
 
 ```
 

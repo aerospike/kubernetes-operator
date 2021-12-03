@@ -23,7 +23,7 @@ Although they can't be updated in place, BlockStorage, FileStorage, MultiPodPerH
 * Storage.Volumes config cannot be updated
 * MultiPodPerHost cannot be updated
 * Cluster security config flag "enable-security" cannot be updated after the first deployment
-* TLS config cannot be updated
+* TLS config cannot be updated. See [Manage TLS Certificates](Manage-TLS-Certificates.md/#rotate-tls-certs) for info on how to rotate TLS certificates.
 * aerospikeConfig.namespace.replication-factor cannot be updated
 * Persistent Aerospike namespace cannot be added dynamically
 * Namespace storage device cannot be resized. No new storage device can be added

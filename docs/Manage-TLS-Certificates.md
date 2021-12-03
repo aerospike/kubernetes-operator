@@ -76,11 +76,9 @@ Save and exit the file, then use kubectl to apply the change.
 kubectl apply -f aerospike-cluster.yaml
 ```
 
-## TLS Certificate Rotation
+## Rotate TLS Certs
 
-To change the TLS certificate, update the Secret which contains the certificate info.
-
-First, update the TLS file(s) which contain the certificates and keys. Use the same filename(s) you originally added to the Secrets folder.
+To change the TLS certificate, first update the TLS file(s) which contain the certificates and keys. Use the same filename(s) you originally added to the `secrets` folder.
 
 Then update the Secret from that folder with the command:
 

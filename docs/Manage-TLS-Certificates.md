@@ -75,3 +75,17 @@ Save and exit the file, then use kubectl to apply the change.
 ```shell
 kubectl apply -f aerospike-cluster.yaml
 ```
+
+## TLS Certificate Rotation
+
+To change the TLS certificate, update the Secret which contains the certificate info.
+
+First, update the TLS file(s) which contain the certificates and keys. Use the same filename(s) you originally added to the Secrets folder.
+
+Then update the Secret from that folder with the command:
+
+```shell
+kubectl create secret generic aerospike-secret --from-file=. -n aerospike --dry-run=client -o yaml | kubectl apply -f -
+```
+
+Kubernetes automatically syncs Secrets and config maps on the pods at regular intervals [as described here in the official Kubernetes documentation](https://kubernetes.io/docs/concepts/configuration/secret/#mounted-secrets-are-updated-automatically). After Kubernetes syncs the Secret onto the pod, Aerospike Server will pick up the new TLS certificates and use them for newer connections created from that point on.

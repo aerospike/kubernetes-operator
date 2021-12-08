@@ -1,19 +1,23 @@
 ---
-title: Create Aerospike Cluster
-description: Create Aerospike Cluster
+title: Create Aerospike Cluster Using kubectl
+description: How to create an Aerospike cluster using kubectl
+id: create-cluster-kubectl
 ---
 
-To deploy the Aerospike cluster using the Operator, create an Aerospike custom resource (CR) file which describes the cluster (including its number of nodes, the Aerospike configuration, system resources, etc.). Then use kubectl to apply that configuration file to your Kubernetes cluster(s).
+To use the Operator to deploy the Aerospike cluster using kubectl, create an Aerospike custom resource (CR) file which describes the cluster (including its number of nodes, the Aerospike configuration, system resources, etc.). Then use kubectl to apply that configuration file to your Kubernetes cluster(s).
 
-## Prerequisites
+## Requirements
 
-Before deploying your Aerospike cluster, you must [install the Aerospike Kubernetes Operator](Install-the-Operator-on-Kubernetes.md) on your Kubernetes cluster(s).
+Before deploying your Aerospike cluster, you must install the Aerospike Kubernetes Operator on your Kubernetes cluster(s) using either:
+
+* [OLM](Install-the-Operator-on-Kubernetes.md)
+* [Helm](install-operator-helm.md)
 
 ## Prepare the Aerospike Cluster Configuration
 
 The Aerospike Kubernetes Operator GitHub repo contains example YAML configuration files for the cluster deployment. These files are located in [the main Aerospike Kubernetes Operator repository](https://github.com/aerospike/aerospike-kubernetes-operator/tree/master/config/samples).
 
-The use case for your cluster will help you to determine which configuration parameters you need to set in the custom resource (CR) file.
+The use case for your cluster will help you determine which configuration parameters you need to set in the custom resource (CR) file.
 
 ## Configure Persistent Storage
 

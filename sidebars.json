@@ -12,14 +12,38 @@
             "type": "doc",
             "id": "System-Requirements"
           },
-          {
-            "type": "doc",
-            "id": "Install-the-Operator-on-Kubernetes"
-          },
-          {
-            "type": "doc",
-            "id": "Create-Aerospike-cluster"
-          },
+            {
+              "type": "category",
+              "label": "Install Operator",
+              "items": [
+                {
+                "type": "doc",
+                "label": "OLM",
+                "id": "install-operator-olm"
+                },
+                {
+                "type": "doc",
+                "label": "Helm",
+                "id": "install-operator-helm"
+                }
+                ]
+              },
+              {
+                "type": "category",
+                "label": "Create Cluster",
+                "items": [
+                  {
+                  "type": "doc",
+                  "label": "kubectl",
+                  "id": "create-cluster-kubectl"
+                  },
+                  {
+                  "type": "doc",
+                  "label": "Helm",
+                  "id": "create-cluster-helm"
+                  }
+                  ]
+                },
           {
             "type": "doc",
             "id": "Connect-to-the-Aerospike-cluster"

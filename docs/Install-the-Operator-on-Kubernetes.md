@@ -1,9 +1,14 @@
 ---
-title: Install the Operator On Kubernetes
-description: Install The Operator On Kubernetes
+title: Install the Operator Using OLM
+description: How to install the Aerospike Kubernetes Operator using Operator Lifecycle Management (OLM)
+id: install-operator-olm
 ---
 
 To begin, create a new Kubernetes cluster on the platform of your choice, and configure kubectl to use that cluster. See the [Requirements page](System-Requirements.md) for Kubernetes version and other requirements.
+
+:::warning
+If you plan to use Helm charts to deploy Aerospike clusters, you also need to [use Helm to install the Operator](install-operator-helm.md), not OLM.
+:::
 
 ## Operator Overview
 
@@ -17,7 +22,7 @@ This documentation includes examples of various Aerospike configuration settings
 
 We recommend using [Operator Lifecycle Manager (OLM)](https://olm.operatorframework.io/]) to run and manage the Aerospike Kubernetes Operator in production environments. OLM is the preferred way to manage Kubernetes operators in production.
 
-:::note
+:::info
 If you are deploying on OpenShift/OKD, you can skip this step. OLM is pre-installed on OpenShift.
 :::
 

@@ -72,7 +72,7 @@ helm install aerospike ./aerospike-cluster \
 ```
 
 :::tip
-This command assumes few defaults, and deploys an Aerospike cluster in "dev" mode with no data persistence. We recommend you create a custom YAML file with configurations as per your requirements and apply it with `helm install`.
+This command assumes few defaults, and deploys an Aerospike cluster in "dev" mode with no data persistence. We recommend you create a custom YAML file with your required configurations, and apply it with `helm install`.
 :::
 
 ```sh

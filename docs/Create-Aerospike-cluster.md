@@ -23,7 +23,7 @@ The use case for your cluster will help you determine which configuration parame
 
 The Aerospike Operator is designed to work with dynamically-provisioned storage classes. Aerospike Server pods may have different storage volumes associated with each service.
 
-Persistent storage on the pods will use these storage class provisioners to provision storage.
+Persistent storage on the pods uses these storage class provisioners.
 
 Apply a sample storage class based on your Kubernetes environment:
 

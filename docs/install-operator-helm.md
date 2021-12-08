@@ -62,7 +62,7 @@ helm install aerospike-kubernetes-operator ./aerospike-kubernetes-operator --set
 | `kubeRBACProxyPort` | Kube RBAC proxy listening port. | `8443` |
 | `certs.create` | Set this to `true` to let the Helm chart automatically create certificates using `cert-manager`. | `true` |
 | `certs.webhookServerCertSecretName` | Kubernetes Secret name which contains webhook server certificates. | `webhook-server-cert`|
-| `watchNamespaces` | Namespaces to watch. Operator will watch for `AerospikeCluster` custom resources in these namespaces. Every watchedNamespace should already exist. For every watched namespace, the Operator creates A ServiceAccount, ClusterRole and ClusterRoleBinding in that namespace. | `default` |
+| `watchNamespaces` | Namespaces to watch. Operator will watch for `AerospikeCluster` custom resources in these namespaces. Every watchedNamespace must already exist. For every watched namespace, the Operator creates A ServiceAccount, ClusterRole and ClusterRoleBinding in that namespace. | `default` |
 | `resources` | Resource requests and limits for the operator pods. | `{}` (nil) |
 | `affinity` | Affinity rules for the Operator deployment. | `{}` (nil) |
 | `extraEnv` | Extra environment variables which will be passed into the operator pods. | `{}` (nil) |

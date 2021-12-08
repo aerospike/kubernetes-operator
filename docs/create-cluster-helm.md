@@ -12,7 +12,7 @@ Before deploying your Aerospike cluster using Helm, you must [use Helm to instal
 
 ## Configure Persistent Storage
 
-The Aerospike Operator is designed to work with dynamically-provisioned storage classes. Aerospike Server pods may have different storage volumes associated with each service.
+The Aerospike Operator works with dynamically-provisioned storage classes. Aerospike Server pods may have different storage volumes associated with each service.
 
 Persistent storage on the pods will use these storage class provisioners to provision storage.
 

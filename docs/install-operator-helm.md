@@ -13,7 +13,7 @@ If you plan to use Helm charts to deploy Aerospike clusters, you also need to us
 
 ## Operator Overview
 
-The Aerospike Kubernetes Operator makes it easier for you to use Aerospike Enterprise clusters on Kubernetes. Instead of making changes to the cluster by hand, you specify changes in the Aerospike cluster CR file and use `kubectl apply` to apply these changes. The Operator picks up on the changes and does what it needs to do in order to make them happen.
+The Aerospike Kubernetes Operator makes it easier for you to use Aerospike Enterprise clusters on Kubernetes. Instead of making changes to the cluster by hand, you specify changes in the Aerospike cluster CR file and use `kubectl apply` to apply these changes. The Operator picks up the changes and does what it needs to do to make them happen.
 
 For example, to add Rack Awareness to your Aerospike cluster, add a rack-aware section to the CR as described in [Rack Awareness](Rack-Awareness.md). Use `kubectl apply -f` to apply the CR, and the Operator deploys Rack Awareness as specified.
 

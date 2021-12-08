@@ -3,7 +3,7 @@ title: System Requirements
 description: System Requirements
 ---
 
-The Aerospike Kubernetes Operator deploys and manages Aerospike Database Enterprise Edition, versions 4.9.0 to 5.6.0.13.  
+The Aerospike Kubernetes Operator deploys and manages Aerospike Database Enterprise Edition, versions 4.9.0 to 5.7.0.8.  
 
 :::note
 Although the Aerospike Kubernetes Operator can be used to deploy Aerospike Community Edition, most of the Operator's features are only compatible with Aerospike Enterprise Edition.

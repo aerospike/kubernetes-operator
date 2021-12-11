@@ -4,7 +4,7 @@ description: How to create an Aerospike cluster using kubectl
 id: create-cluster-kubectl
 ---
 
-To use the Operator to deploy the Aerospike cluster using kubectl, create an Aerospike custom resource (CR) file which describes the cluster (including its number of nodes, the Aerospike configuration, system resources, etc.). Then use kubectl to apply that configuration file to your Kubernetes cluster(s).
+To use the Operator to deploy an Aerospike cluster, create an Aerospike custom resource (CR) file which describes the cluster (including its number of nodes, the Aerospike configuration, system resources, etc.). Then use `kubectl` to apply that configuration file to your Kubernetes cluster(s).
 
 ## Requirements
 

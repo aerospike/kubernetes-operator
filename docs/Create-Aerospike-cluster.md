@@ -1,5 +1,5 @@
 ---
-title: Create Aerospike Cluster Using kubectl
+title: Create an Aerospike Cluster
 description: How to create an Aerospike cluster using kubectl
 id: create-cluster-kubectl
 ---

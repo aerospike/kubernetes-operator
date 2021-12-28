@@ -5,14 +5,14 @@ description: Cluster Configuration Settings
 
 Aerospike cluster configuration settings are in the Aerospike cluster Custom Resource (CR). You can edit this file to make changes to your Aerospike cluster.
 
-The [Operator Custom Resource Definition (CRD)](https://github.com/aerospike/aerospike-kubernetes-operator/blob/master/config/crd/bases/asdb.aerospike.com_aerospikeclusters.yaml) specifies the CR the Operator uses to manage the cluster.
+The [Operator Custom Resource Definition (CRD)](https://github.com/aerospike/aerospike-kubernetes-operator/blob/2.0.0/config/crd/bases/asdb.aerospike.com_aerospikeclusters.yaml) specifies the CR the Operator uses to manage the cluster.
 
 
 ## Example CR
 
 This basic CR is included as an example to get you started. It creates a simple cluster with no storage, using data-in-memory (DIM).
 
-For a more realistic and more complicated real-world example, we recommend the [example rack-enabled cluster CR](https://github.com/aerospike/aerospike-kubernetes-operator/blob/master/config/samples/rack_enabled_cluster_cr.yaml).
+For a more realistic and more complicated real-world example, we recommend the [example rack-enabled cluster CR](https://github.com/aerospike/aerospike-kubernetes-operator/blob/2.0.0/config/samples/rack_enabled_cluster_cr.yaml).
 
 These and other example CRs are stored in [the main Aerospike Kubernetes Operator repository](https://github.com/aerospike/aerospike-kubernetes-operator/tree/master/config/samples).
 
@@ -24,7 +24,7 @@ metadata:
   namespace: aerospike
 spec:
   size: 2
-  image: aerospike/aerospike-server-enterprise:5.6.0.7
+  image: aerospike/aerospike-server-enterprise:5.7.0.8
 
   podSpec:
     multiPodPerHost: true
@@ -64,8 +64,7 @@ spec:
         clustering: debug
     service:
       feature-key-file: /etc/aerospike/secret/features.conf
-    security:
-      enable-security: true
+    security: {}
     network:
       service:
         port: 3000

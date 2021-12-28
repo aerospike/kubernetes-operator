@@ -203,8 +203,7 @@ YAML
 service:
   proto-fd-max: 15000
 
-security:
-  enable-security: true
+security: {}
 
 logging:
   - name: console

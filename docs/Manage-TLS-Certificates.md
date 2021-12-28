@@ -45,8 +45,7 @@ Next, add the TLS-specific configuration to the Aerospike cluster's CR file.
   aerospikeConfig:
     service:
       feature-key-file: /etc/aerospike/secret/features.conf
-    security:
-      enable-security: true
+    security: {}
     network:
       service:
         tls-name: aerospike-a-0.test-runner
@@ -66,7 +65,7 @@ Next, add the TLS-specific configuration to the Aerospike cluster's CR file.
 
 ```
 
-For the full CR file, see the [example TLS cluster CR](https://github.com/aerospike/aerospike-kubernetes-operator/blob/master/config/samples/tls_cluster_cr.yaml).
+For the full CR file, see the [example TLS cluster CR](https://github.com/aerospike/aerospike-kubernetes-operator/blob/2.0.0/config/samples/tls_cluster_cr.yaml).
 
 This and other example CRs are stored in [the main Aerospike Kubernetes Operator repository](https://github.com/aerospike/aerospike-kubernetes-operator/tree/master/config/samples).
 

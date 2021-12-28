@@ -29,6 +29,7 @@ To get the Helm charts, clone the `aerospike/aerospike-kubernetes-operator` repo
 
 ```sh
 git clone https://github.com/aerospike/aerospike-kubernetes-operator.git
+git checkout 2.0.0
 ```
 
 The charts are in the `aerospike-kubernetes-operator/helm-charts` folder.
@@ -50,8 +51,8 @@ helm install aerospike-kubernetes-operator ./aerospike-kubernetes-operator --set
 | Name       | Description | Default   |
 | ---------- | ----------- | --------- |
 | `replicas` | Number of operator replicas. | `2` |
-| `operatorImage.repository` | Operator image repository. | `aerospike/aerospike-kubernetes-operator-nightly` |
-| `operatorImage.tag` | Operator image tag. | `2.0.0-candidate-master-42` |
+| `operatorImage.repository` | Operator image repository. | `aerospike/aerospike-kubernetes-operator` |
+| `operatorImage.tag` | Operator image tag. | `2.0.0` |
 | `operatorImage.pullPolicy` | Image pull policy. | `IfNotPresent` |
 | `imagePullSecrets` | Secrets containing credentials to pull Operator image from a private registry. | `{}` (nil) |
 | `rbac.create` | Set this to `true` to let the Helm chart automatically create RBAC resources necessary for operator. | `true` |

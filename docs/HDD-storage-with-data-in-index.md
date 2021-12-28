@@ -49,8 +49,7 @@ To set this up, add the following storage-specific configuration to the Aerospik
   aerospikeConfig:
     service:
       feature-key-file: /etc/aerospike/secret/features.conf
-    security:
-      enable-security: true
+    security: {}
     namespaces:
       - name: test
         memory-size: 2000000000
@@ -76,7 +75,7 @@ To set this up, add the following storage-specific configuration to the Aerospik
           data-in-memory: true
 ```
 
-For the full CR file, see the [example HDD storage with data-in-index cluster CR](https://github.com/aerospike/aerospike-kubernetes-operator/blob/master/config/samples/hdd_dii_storage_cluster_cr.yaml).
+For the full CR file, see the [example HDD storage with data-in-index cluster CR](https://github.com/aerospike/aerospike-kubernetes-operator/blob/2.0.0/config/samples/hdd_dii_storage_cluster_cr.yaml).
 
 This and other example CRs are stored in [the main Aerospike Kubernetes Operator repository](https://github.com/aerospike/aerospike-kubernetes-operator/tree/master/config/samples).
 

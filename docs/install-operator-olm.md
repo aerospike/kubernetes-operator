@@ -6,7 +6,7 @@ id: install-operator-olm
 
 To begin, create a new Kubernetes cluster on the platform of your choice, and configure kubectl to use that cluster. See the [Requirements page](System-Requirements.md) for Kubernetes version and other requirements.
 
-:::warning
+:::tip
 If you plan to use Helm charts to deploy Aerospike clusters, you also need to [use Helm to install the Operator](install-operator-helm.md), not OLM.
 :::
 
@@ -97,7 +97,7 @@ $ kubectl get pod -n aerospike
 NAME                                                              READY   STATUS      RESTARTS   AGE
 5af02cb7676a864fa68cc875fb1bc64df2f1223ab355b4911792e9--1-vlltn   0/1     Completed   0          63s
 aerospike-operator-controller-manager-55d45754bf-smzxc            2/2     Running     0          48s
-ker-io-aerospike-aerospike-kubernetes-operator-bundle-2-0-0-rc1   1/1     Running     0          73s
+ker-io-aerospike-aerospike-kubernetes-operator-bundle-2-0-0       1/1     Running     0          73s
 
 ```
 

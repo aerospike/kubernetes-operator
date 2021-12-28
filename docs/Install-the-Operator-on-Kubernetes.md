@@ -1,6 +1,6 @@
 ---
-title: Install the Operator Using OLM
-description: How to install the Aerospike Kubernetes Operator using Operator Lifecycle Management (OLM)
+title: Install the Operator
+description: How to install the Aerospike Kubernetes Operator 
 id: install-operator
 ---
 
@@ -15,7 +15,7 @@ For example, to add Rack Awareness to your Aerospike cluster, add a rack-aware s
 
 This documentation includes examples of various Aerospike configuration settings and possibilities you can use with your Aerospike cluster on Kubernetes. If you have questions, suggestions, or other feedback, please let us know.
 
-
+ 
 ## Install the Operator
 
 There are two methods installing the Aerospike Kubernetes Operator itself. The primary, and recommended method, is to use the Operator Lifecycle Manager (OLM). The second method is to use Helm charts themselves to install the operator (which will then in turn manage the Aerospike clusters).
@@ -25,8 +25,8 @@ If you are unsure which method to use, we recommend using the OLM
 
 We recommend using [Operator Lifecycle Manager (OLM)](https://olm.operatorframework.io/]) to run and manage the Aerospike Kubernetes Operator in production environments. OLM is the preferred way to manage Kubernetes operators in production.
 
-:::warning
-Caveat: If you plan to use Helm charts to deploy Aerospike clusters, you will also need to [use Helm to install the Operator](install-operator-helm.md), instead.
+:::tip
+If you plan to use Helm charts to deploy Aerospike clusters, you will also need to [use Helm to install the Operator](install-operator-helm.md), instead.
 :::
 
 Follow the steps [here to install the Aerospike Kubernetes Operator using OLM](install-operator-olm)
@@ -35,7 +35,7 @@ Follow the steps [here to install the Aerospike Kubernetes Operator using OLM](i
 
 In some cases, particularly if you are planning on using helm charts to deploy Aerospike clusters directly (rather than relying on the operator), you may need to use the helm chart to also install the operator. 
 
-:::note
+:::tip
 There are some mandatory, manual, steps if installing this way. Please ensure you need this behavior and follow the instructions closely.
 :::
 

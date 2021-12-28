@@ -25,16 +25,16 @@ Next, add this service account to the Operator's `ClusterRoleBinding`. To do thi
 
 ```shell
 kubectl get clusterrolebindings.rbac.authorization.k8s.io  | grep aerospike-kubernetes-operator
-aerospike-kubernetes-operator.v2.0.0-rc2-74b946466d                 ClusterRole/aerospike-kubernetes-operator.v2.0.0-rc2-74b946466d   41m
+aerospike-kubernetes-operator.v2.0.0-74b946466d                 ClusterRole/aerospike-kubernetes-operator.v2.0.0-74b946466d   41m
 ```
 
-In this example, the name of the cluster role binding is `aerospike-kubernetes-operator.v2.0.0-rc2-74b946466d`
+In this example, the name of the cluster role binding is `aerospike-kubernetes-operator.v2.0.0-74b946466d`
 
 Use kubectl to edit the role binding and add a new subject entry for the service account:
 
 ```shell
-# Replace aerospike-kubernetes-operator.v2.0.0-rc2-74b946466d with the name of the cluster role binding found above
-kubectl edit clusterrolebindings.rbac.authorization.k8s.io  aerospike-kubernetes-operator.v2.0.0-rc2-74b946466d
+# Replace aerospike-kubernetes-operator.v2.0.0-74b946466d with the name of the cluster role binding found above
+kubectl edit clusterrolebindings.rbac.authorization.k8s.io  aerospike-kubernetes-operator.v2.0.0-74b946466d
 ```
 
 This command launches an editor. Append the following lines to the `subjects` section:
@@ -57,17 +57,17 @@ kind: ClusterRoleBinding
 metadata:
   creationTimestamp: "2021-09-16T10:48:36Z"
   labels:
-    olm.owner: aerospike-kubernetes-operator.v2.0.0-rc2
+    olm.owner: aerospike-kubernetes-operator.v2.0.0
     olm.owner.kind: ClusterServiceVersion
     olm.owner.namespace: test
     operators.coreos.com/aerospike-kubernetes-operator.test: ""
-  name: aerospike-kubernetes-operator.v2.0.0-rc2-74b946466d
+  name: aerospike-kubernetes-operator.v2.0.0-74b946466d
   resourceVersion: "51841234"
   uid: be546dd5-b21e-4cc3-8a07-e2fe5fe5274c
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: aerospike-kubernetes-operator.v2.0.0-rc2-74b946466d
+  name: aerospike-kubernetes-operator.v2.0.0-74b946466d
 subjects:
   - kind: ServiceAccount
     name: aerospike-operator-controller-manager

@@ -97,7 +97,7 @@ $ kubectl get pod -n aerospike
 NAME                                                              READY   STATUS      RESTARTS   AGE
 5af02cb7676a864fa68cc875fb1bc64df2f1223ab355b4911792e9--1-vlltn   0/1     Completed   0          63s
 aerospike-operator-controller-manager-55d45754bf-smzxc            2/2     Running     0          48s
-ker-io-aerospike-aerospike-kubernetes-operator-bundle-2-0-0-rc1   1/1     Running     0          73s
+ker-io-aerospike-aerospike-kubernetes-operator-bundle-2-0-0       1/1     Running     0          73s
 
 ```
 

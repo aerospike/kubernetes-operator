@@ -35,7 +35,6 @@ For example, suppose that you want to give two people access to the Aerospike cl
 spec:
   .
   .
-  enable-security: true
   .
   aerospikeAccessControl:
     users:

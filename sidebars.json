@@ -91,6 +91,10 @@
           {
             "type": "doc",
             "id": "Aerospike-access-control"
+          },
+          {
+            "type": "doc",
+            "id": "Warm-restart"
           }
         ],
         "collapsible": true,

@@ -55,8 +55,7 @@ Next, add the following storage-specific configuration to the Aerospike cluster'
   aerospikeConfig:
     service:
       feature-key-file: /etc/aerospike/secret/features.conf
-    security:
-      enable-security: true
+    security: {}
     namespaces:
       - name: test
         memory-size: 3000000000
@@ -67,7 +66,7 @@ Next, add the following storage-specific configuration to the Aerospike cluster'
             - /dev/nvme0n1 /dev/sdf
 ```
 
-For the full CR file, see the [example shadow device cluster CR](https://github.com/aerospike/aerospike-kubernetes-operator/blob/master/config/samples/shadow_device_cluster_cr.yaml).
+For the full CR file, see the [example shadow device cluster CR](https://github.com/aerospike/aerospike-kubernetes-operator/blob/2.0.0/config/samples/shadow_device_cluster_cr.yaml).
 
 This and other example CRs are stored in [the main Aerospike Kubernetes Operator repository](https://github.com/aerospike/aerospike-kubernetes-operator/tree/master/config/samples).
 

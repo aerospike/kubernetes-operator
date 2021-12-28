@@ -51,8 +51,7 @@ This example adds Rack Awareness to an existing Aerospike cluster CR file.
   aerospikeConfig:
     service:
       feature-key-file: /etc/aerospike/secret/features.conf
-    security:
-      enable-security: true
+    security: {}
     namespaces:
       - name: test
         memory-size: 3000000000
@@ -76,7 +75,7 @@ Save and exit the CR file, then use kubectl to apply the change.
 kubectl apply -f aerospike-cluster.yaml
 ```
 
-For the full CR file, see the [example rack-enabled cluster CR](https://github.com/aerospike/aerospike-kubernetes-operator/blob/master/config/samples/rack_enabled_cluster_cr.yaml).
+For the full CR file, see the [example rack-enabled cluster CR](https://github.com/aerospike/aerospike-kubernetes-operator/blob/2.0.0/config/samples/rack_enabled_cluster_cr.yaml).
 
 This and other example CRs are stored in [the main Aerospike Kubernetes Operator repository](https://github.com/aerospike/aerospike-kubernetes-operator/tree/master/config/samples).
 
@@ -209,8 +208,7 @@ As an example, here is the original rack-local aerospikeConfig and common global
   aerospikeConfig:
     service:
       feature-key-file: /etc/aerospike/secret/features.conf
-    security:
-      enable-security: true
+    security: {}
     namespaces:
       - name: test
         memory-size: 3000000000
@@ -235,8 +233,7 @@ After merging the rack-local aerospikeConfig with the common global aerospikeCon
     service:
       proto-fd-max: 18000
       feature-key-file: /etc/aerospike/secret/features.conf
-    security:
-      enable-security: true
+    security: {}
     namespaces:
       - name: test
         memory-size: 3000000000

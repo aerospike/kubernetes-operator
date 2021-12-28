@@ -57,8 +57,7 @@ spec:
   aerospikeConfig:
     service:
       feature-key-file: /etc/aerospike/secret/features.conf
-    security:
-      enable-security: true
+    security: {}
     namespaces:
       - name: test
         memory-size: 6000000000
@@ -127,8 +126,7 @@ spec:
   aerospikeConfig:
     service:
       feature-key-file: /etc/aerospike/secret/features.conf
-    security:
-      enable-security: true
+    security: {}
     namespaces:
       - name: test
         memory-size: 10000000000

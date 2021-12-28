@@ -3,6 +3,36 @@ title: Aerospike Access Control
 description: Aerospike Access Control
 ---
 
+## Enable security
+To use Aerospike Access control you need to enable security for the Aerospike clusters.
+
+### Aerospike server 5.7.x and later
+Enable security for your Aerospike clusters in aerospikeConfig section of the CR like so
+```yaml
+  aerospikeConfig:
+    .
+    .
+    .
+    security: {}
+    .
+    .
+    .
+```
+
+### Aerospike server 5.6.x and prior
+Enable security for your Aerospike clusters in aerospikeConfig section of the CR like so
+```yaml
+  aerospikeConfig:
+    .
+    .
+    .
+    security: 
+      enable-security: true
+    .
+    .
+    .
+```
+
 Aerospike Access Control includes user, role, and privilege creation and maintenance. [See the documentation for more information on Aerospike Access Control](https://docs.aerospike.com/docs/operations/configure/security/access-control/index.html).
 
 To manage your access controls from the operator, configure the `aerospikeAccessControl` section in the Aerospike cluster's Custom Resource (CR) file.
@@ -10,7 +40,6 @@ To manage your access controls from the operator, configure the `aerospikeAccess
 :::warning
 Access control changes on an operator-managed Aerospike cluster will be reverted if made externally (e.g. using `aql` or `asadm`).
 :::
-
 
 Here are a few examples for common access control tasks:
 

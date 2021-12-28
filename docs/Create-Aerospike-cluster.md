@@ -60,7 +60,7 @@ You can edit the CR file at any time to make changes and manage the Aerospike cl
 
 Use the custom resource YAML file you created to deploy an Aerospike cluster. If you don't have a custom resource file, you can choose one of the sample files in the main Aerospike Kubernetes Operator repository](https://github.com/aerospike/aerospike-kubernetes-operator/tree/master/config/samples).
 
-For example, to use the [dim_nostorage_cluster_cr.yaml](https://github.com/aerospike/aerospike-kubernetes-operator/blob/master/config/samples/dim_nostorage_cluster_cr.yaml) file, download it and apply it to your cluster with:
+For example, to use the [dim_nostorage_cluster_cr.yaml](https://github.com/aerospike/aerospike-kubernetes-operator/blob/2.0.0/config/samples/dim_nostorage_cluster_cr.yaml) file, download it and apply it to your cluster with:
 
 ```shell
 kubectl apply -f dim_nostorage_cluster_cr.yaml

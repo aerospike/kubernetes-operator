@@ -103,7 +103,7 @@ spec:
             - /test/dev/xvdf
 ```
 
-For the full CR file, see the [example all-flash cluster CR](https://github.com/aerospike/aerospike-kubernetes-operator/blob/master/config/samples/all_flash_cluster_cr.yaml).
+For the full CR file, see the [example all-flash cluster CR](https://github.com/aerospike/aerospike-kubernetes-operator/blob/2.0.0/config/samples/all_flash_cluster_cr.yaml).
 
 This and other example CRs are stored in [the main Aerospike Kubernetes Operator repository](https://github.com/aerospike/aerospike-kubernetes-operator/tree/master/config/samples).
 

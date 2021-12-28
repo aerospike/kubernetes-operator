@@ -56,8 +56,7 @@ storage:
     service:
       feature-key-file: /etc/aerospike/secret/features.conf
 
-    security:
-      enable-security: true
+    security: {}
 
     network:
       service:
@@ -91,7 +90,7 @@ storage:
 
 ```
 
-For the full CR file, see the [example XDR CR](https://github.com/aerospike/aerospike-kubernetes-operator/blob/master/config/samples/xdr_src_cluster_cr.yaml).
+For the full CR file, see the [example XDR CR](https://github.com/aerospike/aerospike-kubernetes-operator/blob/2.0.0/config/samples/xdr_src_cluster_cr.yaml).
 
 This and other example CRs are stored in [the main Aerospike Kubernetes Operator repository](https://github.com/aerospike/aerospike-kubernetes-operator/tree/master/config/samples).
 

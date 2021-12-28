@@ -29,6 +29,7 @@ To get the Helm charts, clone the `aerospike/aerospike-kubernetes-operator` repo
 
 ```sh
 git clone https://github.com/aerospike/aerospike-kubernetes-operator.git
+git checkout 2.0.0
 ```
 
 The charts are in the `aerospike-kubernetes-operator/helm-charts` folder.

@@ -15,6 +15,7 @@
             {
               "type": "category",
               "label": "Install Operator",
+              "link": {"type": "doc", "id": "install-operator"},
               "items": [
                 {
                 "type": "doc",
@@ -34,7 +35,7 @@
                 "items": [
                   {
                   "type": "doc",
-                  "label": "kubectl",
+                  "label": "OLM (kubectl)",
                   "id": "create-cluster-kubectl"
                   },
                   {

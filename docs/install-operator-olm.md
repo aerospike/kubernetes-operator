@@ -20,7 +20,7 @@ This documentation includes examples of various Aerospike configuration settings
 
 ## Install the Operator Lifecycle Manager (OLM)
 
-We recommend using [Operator Lifecycle Manager (OLM)](https://olm.operatorframework.io/]) to run and manage the Aerospike Kubernetes Operator in production environments. OLM is the preferred way to manage Kubernetes operators in production.
+We recommend using [Operator Lifecycle Manager (OLM)](https://olm.operatorframework.io/]) to run and manage the Aerospike Kubernetes Operator in production environments. 
 
 :::info
 If you are deploying on OpenShift/OKD, you can skip this step. OLM is pre-installed on OpenShift.

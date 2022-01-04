@@ -24,7 +24,7 @@ If you are unsure which method to choose, we recommend using the OLM.
 
 ### Method 1: Install the Operator Lifecycle Manager (OLM)
 
-We recommend using [Operator Lifecycle Manager (OLM)](https://olm.operatorframework.io/]) to run and manage the Aerospike Kubernetes Operator in production environments. OLM is the preferred way to manage Kubernetes operators in production.
+We recommend using [Operator Lifecycle Manager (OLM)](https://olm.operatorframework.io/]) to run and manage the Aerospike Kubernetes Operator in production environments. 
 
 :::tip
 If you plan to use Helm charts to deploy Aerospike clusters, you will also need to [use Helm to install the Operator](install-operator-helm.md), instead.

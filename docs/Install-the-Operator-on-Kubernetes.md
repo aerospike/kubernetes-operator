@@ -34,7 +34,7 @@ Follow the steps [here to install the Aerospike Kubernetes Operator using OLM](i
 
 ### Method 2: Install the Operator using Helm Charts
 
-In some cases, particularly if you are planning on using helm charts to deploy Aerospike clusters directly (rather than relying on the operator), you may need to use the helm chart to also install the operator. 
+In some cases, particularly if you use Helm charts to deploy Aerospike clusters directly rather than relying on the Operator, you may need to use the Helm chart to also install the Operator. 
 
 :::tip
 There are some mandatory, manual, steps if installing this way. Please ensure you need this behavior and follow the instructions closely.

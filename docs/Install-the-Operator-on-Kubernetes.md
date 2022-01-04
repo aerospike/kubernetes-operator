@@ -20,7 +20,7 @@ This documentation includes examples of various Aerospike configuration settings
 
 There are two methods installing the Aerospike Kubernetes Operator itself. The primary, and recommended method, is to use the Operator Lifecycle Manager (OLM). The second method is to use Helm charts themselves to install the operator (which will then in turn manage the Aerospike clusters).
 
-If you are unsure which method to choose, we recommend using the OLM
+If you are unsure which method to choose, we recommend using the OLM.
 
 ### Method 1: Install the Operator Lifecycle Manager (OLM)
 
